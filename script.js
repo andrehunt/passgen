@@ -77,12 +77,12 @@ const generatedPassword = document.getElementById('generatedPassword');
 const copyBtn = document.getElementById('copyBtn');
 const strengthMeter = document.getElementById('strengthMeter');
 const strengthBar = document.getElementById('strengthBar');
-
 const themeToggleButton = document.getElementById('themeToggle');
 
 themeToggleButton.addEventListener('click', () => {
     document.body.classList.toggle('blue-theme');
 });
+
 
 passwordType.addEventListener('change', function() {
     if (this.value === 'temporary') {
