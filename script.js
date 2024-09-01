@@ -4,7 +4,6 @@ const loadingScreen = document.querySelector('.loading-screen');
 const mainContent = document.querySelectorAll('.navbar, .hero, .generator, .about');
 const asciiArt = document.getElementById('asciiArt');
 
-// ASCII art for "PassGen"
 const asciiArtText = `
  .S_sSSs     .S_SSSs      sSSs    sSSs          sSSSSs    sSSs   .S_sSSs    
 .SS~YS%%b   .SS~SSSSS    d%%SP   d%%SP         d%%%%SP   d%%SP  .SS~YS%%b   
@@ -39,6 +38,7 @@ function displayAsciiArt() {
     });
     asciiArt.innerHTML = html;
 }
+
 
 // Simulated loading process
 const loadingSteps = [
