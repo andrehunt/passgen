@@ -7,19 +7,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        .ascii-art-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
         .ascii-art {
             font-family: 'Courier New', Courier, monospace; /* Monospaced font */
-            white-space: pre; /* Preserves the formatting */
             color: #ff0000; /* Red color */
-            text-align: center; /* Centers the ASCII art */
-            margin-bottom: 1rem; /* Adds some space below the ASCII art */
         }
     </style>
 </head>
 <body class="bg-black flex items-center justify-center min-h-screen">
     <div class="bg-black p-8 rounded-lg shadow-md w-full max-w-md">
-        <div class="ascii-art">
-<pre>
+        <div class="ascii-art-container">
+            <div class="ascii-art">
+                <pre>
  .S_sSSs     .S_SSSs      sSSs    sSSs          sSSSSs    sSSs   .S_sSSs    
 .SS~YS%%b   .SS~SSSSS    d%%SP   d%%SP         d%%%%SP   d%%SP  .SS~YS%%b   
 S%S   `S%b  S%S   SSSS  d%S'    d%S'          d%S'      d%S'    S%S   `S%b  
@@ -34,7 +39,8 @@ S*S         S*S    S*S  sSS*S   sSS*S          SS_sSSS   SSSbs  S*S    S*S
 S*S         SSS    S*S  YSS'    YSS'            Y~YSSY    YSSP  S*S    SSS  
 SP                 SP                                           SP          
 Y                  Y                                            Y           
-</pre>
+                </pre>
+            </div>
         </div>
         
         <!-- Form and other content goes here -->
