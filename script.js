@@ -81,7 +81,7 @@ const strengthBar = document.getElementById('strengthBar');
 const themeToggleButton = document.getElementById('themeToggle');
 
 themeToggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('invert');
+    document.body.classList.toggle('blue-theme');
 });
 
 passwordType.addEventListener('change', function() {
