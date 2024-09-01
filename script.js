@@ -67,16 +67,23 @@ function updateStrengthMeter(password) {
     const percentage = (strength / 4) * 100;
     strengthBar.style.width = `${percentage}%`;
     strengthBar.style.backgroundColor = 'red';
-    strengthBar.textContent = '';
+    strengthBar.textContent = ''; // No text in the bar
 }
 
 function calculatePasswordStrength(password) {
     let strength = 0;
     if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
     if (/[A-Z]/.test(password)) strength++;
     if (/[0-9]/.test(password)) strength++;
     if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
-    return Math.min(strength, 4);
+
+    // Additional complexity checks
+    if (/[\W_]/.test(password)) strength++; // Non-alphanumeric characters
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++; // Mixed case
+    if (password.length >= 16) strength++; // Longer password
+
+    return Math.min(strength, 4); // Cap strength at 4
 }
 
 function copyToClipboard() {
