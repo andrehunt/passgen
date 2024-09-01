@@ -6,6 +6,8 @@
     <title>PassGen | Your Password Generator</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
     <style>
         .ascii-art-container {
             display: flex;
@@ -18,6 +20,16 @@
             font-family: Consolas,monaco,monospace; 
             color: #ffffff;
              font-size: 5px;
+        }
+                /* New styles for particles canvas */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #000000;
         }
     </style>
 </head>
