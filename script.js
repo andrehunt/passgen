@@ -14,25 +14,18 @@ const copyBtn = document.getElementById('copyBtn');
 const strengthBar = document.getElementById('strengthBar');
 
 const words = [
-    "example", "apple", "beach", "book", "chair", "cloud", "coffee", "dog",
-    "door", "house", "light", "moon", "mountain", "paper", "plant", "rain",
-    "road", "sky", "star", "table", "tree", "water", "window", "world", "air",
-    "ball", "cat", "city", "day", "ear", "egg", "eye", "fire", "floor", "friend",
-    "garden", "glass", "hand", "hill", "ice", "key", "leaf", "man", "mouse",
-    "name", "night", "nose", "park", "pen", "phone", "river", "room", "sand",
-    "school", "sea", "shoe", "snow", "sound", "street", "sun", "tail", "tea",
-    "toy", "wind", "yard", "zoo", "action", "artist", "bottle", "bridge", "camera",
-    "country", "dance", "desk", "doctor", "dream", "engine", "family", "flag",
-    "food", "game", "gift", "ground", "hobby", "idea", "internet", "joke", "king",
-    "lunch", "magic", "movie", "music", "net", "party", "place", "plan",
-    "question", "record", "shirt", "simple", "sport", "story", "ticket", "train",
-    "user", "view", "week", "wish", "zone", "running", "walking", "talking",
-    "writing", "reading", "jumping", "flying", "swimming", "playing", "driving",
-    "bringing", "taking", "seeing", "hearing", "making", "finding", "giving",
-    "calling", "turning", "working", "camel", "panda", "zebra", "penguin",
-    "owl", "eagle", "hawk", "parrot", "pigeon", "goose"
+    "apple", "beach", "book", "cloud", "coffee", "dog", "door", "house",
+    "light", "moon", "mountain", "paper", "plant", "rain", "road", "sky",
+    "star", "table", "tree", "water", "window", "world", "air", "ball",
+    "cat", "city", "day", "fire", "glass", "hill", "key", "leaf", "night",
+    "park", "phone", "river", "sand", "sea", "snow", "street", "sun", "tea",
+    "wind", "zoo", "action", "artist", "bottle", "bridge", "dream", "family", "gift", "magic", "movie", "music", "party",
+    "place", "plan", "record", "shirt", "simple", "sport", "story", "train",
+    "view", "zone", "running", "walking", "talking", "reading", "jumping",
+    "flying", "hearing", "finding", "bird", "lion", "tiger", "wolf", "fox",
+    "rabbit", "squirrel", "panda", "zebra", "penguin", "owl", "eagle", "hawk",
+    "parrot", "pigeon", "goose"
 ];
-
 
 passwordType.addEventListener('change', updateOptions);
 wordCount.addEventListener('input', updateWordCountDisplay);
@@ -90,7 +83,7 @@ function generateSecurePassword() {
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';
     const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
-    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const symbols = '!@#$%&+;
 
     let chars = lowercase;
     if (includeUppercase.checked) chars += uppercase;
