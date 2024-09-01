@@ -5,27 +5,14 @@ body {
     color: #ffffff;
 }
 
-/* Button Styles */
-button {
-    background-color: #121212; /* Dark background for button */
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-}
-
-button:hover {
-    background-color: #333333; /* Slightly lighter on hover */
-}
-
 /* Form Inputs */
 select,
 input[type="text"],
-input[type="range"] {
+input[type="range"],
+button {
     background-color: #121212; /* Light black background */
     border-color: #ff0000; /* Red border */
-    color: #ffffff; /* White text */
+    color: white; /* White text */
 }
 
 /* Focus States */
@@ -100,14 +87,12 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
-/* Strength Meter */
-#wrapper #strengthMeter {
-    background-color: #121212; /* Dark background for strength meter */
-    border-radius: 9999px;
-}
-
-#strengthBar {
-    background-color: #ff0000; /* Red background for strength meter */
+/* Button Styles */
+button {
+    background-color: #ff0000; /* Red background */
+    border: none;
+    color: white;
+    cursor: pointer;
 }
 
 /* Ascii Art */
@@ -121,16 +106,5 @@ input[type="range"]::-moz-range-thumb {
 
 .ascii-art {
     font-family: 'Courier New', Courier, monospace; /* Monospaced font */
-    color: #ffffff;
-}
-
-/* Light Mode (Inverted Colors) */
-body.invert {
-    filter: invert(1) hue-rotate(180deg);
-}
-
-/* Theme Toggle Button */
-#themeToggle {
-    background-color: #333333; /* Dark background for theme toggle button */
     color: #ffffff;
 }
