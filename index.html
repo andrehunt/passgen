@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #000000;
+        }
         .ascii-art-container {
             display: flex;
             justify-content: center;
@@ -20,21 +29,11 @@
             color: #ffffff;
             font-size: 5px;
         }
-        /* New styles for particles canvas */
-        #particles-js {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-color: #000000;
-        }
     </style>
 </head>
 <body class="bg-black flex items-center justify-center min-h-screen">
-    <div id="particles-js"></div> <!-- Particle.js container -->
-    <div class="bg-black p-8 rounded-lg shadow-md w-full max-w-md relative z-10"> <!-- Added relative z-index -->
+    <div id="particles-js"></div>
+    <div class="bg-black p-8 rounded-lg shadow-md w-full max-w-md relative">
         <div class="ascii-art-container">
             <div class="ascii-art">
                 <pre>
@@ -52,7 +51,6 @@ S*S         S*S    S*S  sSS*S   sSS*S          SS_sSSS   SSSbs  S*S    S*S
 S*S         SSS    S*S  YSS'    YSS'            Y~YSSY    YSSP  S*S    SSS  
 SP                 SP                                           SP          
 Y                  Y                                            Y           
-                                                                            
                 </pre>
             </div>
         </div>
