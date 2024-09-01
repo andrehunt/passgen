@@ -143,7 +143,14 @@ body.invert {
     color: #000000;
 }
 
-/* Slider Input for Light Mode */
+body.invert select,
+body.invert input[type="text"],
+body.invert input[type="range"] {
+    background-color: #ffffff; /* Light background for inputs in light mode */
+    border-color: #0000ff; /* Dark blue border in light mode */
+    color: #000000; /* Black text in light mode */
+}
+
 body.invert input[type="range"] {
     background: #cccccc; /* Light background for track in light mode */
 }
@@ -157,11 +164,33 @@ body.invert input[type="range"]::-moz-range-track {
 }
 
 body.invert input[type="range"]::-webkit-slider-thumb {
-    background: #0000ff; /* Bright dark blue background for thumb in light mode */
+    background: #0000ff; /* Dark blue background for thumb in light mode */
 }
 
 body.invert input[type="range"]::-moz-range-thumb {
-    background: #0000ff; /* Bright dark blue background for thumb in light mode */
+    background: #0000ff; /* Dark blue background for thumb in light mode */
+}
+
+body.invert .form-checkbox {
+    border: 2px solid #0000ff; /* Dark blue border in light mode */
+}
+
+body.invert .form-checkbox:checked {
+    background-color: #0000ff; /* Dark blue background for checked checkbox in light mode */
+    border-color: #0000ff; /* Dark blue border for checked checkbox in light mode */
+}
+
+body.invert button {
+    background-color: #ffffff; /* White background for buttons in light mode */
+    color: #000000; /* Black text for buttons in light mode */
+}
+
+body.invert button:hover {
+    background-color: #cccccc; /* Light gray on hover in light mode */
+}
+
+body.invert #strengthBar {
+    background-color: #0000ff; /* Dark blue background for strength bar in light mode */
 }
 
 /* Theme Toggle Button */
