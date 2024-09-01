@@ -38,7 +38,7 @@ function generatePassword() {
             selectedWords.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
         }
         const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
-        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+        const symbols = '!@#$+';
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
         password = selectedWords.join('') + numbers + symbol;
     } else {
@@ -47,7 +47,7 @@ function generatePassword() {
         const lowercase = 'abcdefghijklmnopqrstuvwxyz';
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const numbers = '0123456789';
-        const symbols = '!@#$+';
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
         
         let chars = lowercase;
         if (includeUppercase.checked) chars += uppercase;
