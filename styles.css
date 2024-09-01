@@ -1,8 +1,29 @@
+/* Global Styles */
 body {
     font-family: 'Courier New', monospace;
     background-color: #000000;
     color: #ffffff;
 }
+
+/* Form Inputs */
+select,
+input[type="text"],
+input[type="range"],
+button {
+    background-color: #121212; /* Light black background */
+    border-color: #ff0000; /* Red border */
+    color: white; /* White text */
+}
+
+/* Focus States */
+select:focus,
+input[type="text"]:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ff0000; /* Red shadow when focused */
+}
+
+/* Custom Checkbox */
 .form-checkbox {
     appearance: none;
     -webkit-appearance: none;
@@ -16,10 +37,12 @@ body {
     position: relative;
     cursor: pointer;
 }
+
 .form-checkbox:checked {
     background-color: #ff0000;
     border-color: #ff0000;
 }
+
 .form-checkbox:checked::after {
     content: '\2714';
     font-size: 1rem;
@@ -29,6 +52,8 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Slider Input */
 input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
@@ -39,9 +64,11 @@ input[type="range"] {
     opacity: 0.7;
     transition: opacity .2s;
 }
+
 input[type="range"]:hover {
     opacity: 1;
 }
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -51,10 +78,33 @@ input[type="range"]::-webkit-slider-thumb {
     background: #ff0000;
     cursor: pointer;
 }
+
 input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background: #ff0000;
     cursor: pointer;
+}
+
+/* Button Styles */
+button {
+    background-color: #ff0000; /* Red background */
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Ascii Art */
+.ascii-art-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.ascii-art {
+    font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+    color: #ffffff;
 }
