@@ -124,9 +124,43 @@ input[type="range"]::-moz-range-thumb {
     color: #ffffff;
 }
 
-/* Light Mode (Inverted Colors) */
+/* Light Mode */
 body.invert {
     filter: invert(1) hue-rotate(180deg);
+}
+
+body.invert button,
+body.invert .form-checkbox,
+body.invert select,
+body.invert input[type="text"],
+body.invert input[type="range"],
+body.invert #strengthBar {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+body.invert select,
+body.invert input[type="text"],
+body.invert input[type="range"] {
+    border-color: #0000ff; /* Blue border in light mode */
+    color: #000000; /* Black text in light mode */
+}
+
+body.invert button {
+    background-color: #ffffff; /* White background in light mode */
+    color: #000000; /* Black text in light mode */
+}
+
+body.invert #strengthBar {
+    background-color: #0000ff; /* Blue background in light mode */
+}
+
+body.invert .form-checkbox {
+    border-color: #0000ff; /* Blue border in light mode */
+}
+
+body.invert .form-checkbox:checked {
+    background-color: #0000ff; /* Blue background in light mode */
+    border-color: #0000ff; /* Blue border in light mode */
 }
 
 /* Theme Toggle Button */
