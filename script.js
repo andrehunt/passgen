@@ -1,78 +1,63 @@
-// Initialize Particles.js
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 80,
+            "value": 50, // Fewer particles for a less cluttered effect
             "density": {
                 "enable": true,
                 "value_area": 800
             }
         },
         "color": {
-            "value": "#ffffff"
+            "value": "#ffffff" // Soft white color for subtlety
         },
         "shape": {
             "type": "circle",
             "stroke": {
                 "width": 0,
                 "color": "#000000"
-            },
-            "polygon": {
-                "nb_sides": 5
             }
         },
         "opacity": {
-            "value": 0.5,
-            "random": false,
+            "value": 0.3, // Lower opacity for a more subtle appearance
+            "random": true,
             "anim": {
-                "enable": false,
-                "speed": 1,
+                "enable": true,
+                "speed": 1, // Slow movement
                 "opacity_min": 0.1,
                 "sync": false
             }
         },
         "size": {
-            "value": 3,
+            "value": 2, // Smaller particles
             "random": true,
             "anim": {
-                "enable": false,
-                "speed": 40,
+                "enable": true,
+                "speed": 1, // Slow size animation
                 "size_min": 0.1,
                 "sync": false
             }
         },
         "line_linked": {
-            "enable": true,
-            "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
-            "width": 1
+            "enable": false // No connecting lines
         },
         "move": {
             "enable": true,
-            "speed": 6,
+            "speed": 1, // Slow movement
             "direction": "none",
             "random": false,
             "straight": false,
             "out_mode": "out",
-            "bounce": false,
-            "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
+            "bounce": false
         }
     },
     "interactivity": {
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": true,
-                "mode": "repulse"
+                "enable": false // No interaction effects
             },
             "onclick": {
-                "enable": true,
-                "mode": "push"
+                "enable": false // No interaction effects
             },
             "resize": true
         }
