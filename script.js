@@ -63,13 +63,20 @@ function generatePassword() {
 }
 
 function updateStrengthMeter(password) {
+    const strength = calculatePasswordStrength(password);
+    const percentage = (strength / 4) * 100;
+    strengthBar.style.width = `${percentage}%`;
+    strengthBar.style.backgroundColor = 'red';
+    strengthBar.textContent = '';
+}
+
+function calculatePasswordStrength(password) {
     let strength = 0;
-    if (password.length >= 8) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/[0-9]/.test(password)) strength += 25;
-    if (/[\W_]/.test(password)) strength += 25;
-    strengthBar.style.width = `${strength}%`;
-    strengthBar.textContent = strength + '%';
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
+    return Math.min(strength, 4);
 }
 
 function copyToClipboard() {
