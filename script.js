@@ -1,14 +1,15 @@
+// Initialize particles.js
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 50, // Fewer particles for a less cluttered effect
+            "value": 50,
             "density": {
                 "enable": true,
                 "value_area": 800
             }
         },
         "color": {
-            "value": "#ffffff" // Soft white color for subtlety
+            "value": "#ffffff"
         },
         "shape": {
             "type": "circle",
@@ -18,31 +19,31 @@ particlesJS('particles-js', {
             }
         },
         "opacity": {
-            "value": 0.3, // Lower opacity for a more subtle appearance
+            "value": 0.3,
             "random": true,
             "anim": {
                 "enable": true,
-                "speed": 1, // Slow movement
+                "speed": 1,
                 "opacity_min": 0.1,
                 "sync": false
             }
         },
         "size": {
-            "value": 2, // Smaller particles
+            "value": 2,
             "random": true,
             "anim": {
                 "enable": true,
-                "speed": 1, // Slow size animation
+                "speed": 1,
                 "size_min": 0.1,
                 "sync": false
             }
         },
         "line_linked": {
-            "enable": false // No connecting lines
+            "enable": false
         },
         "move": {
             "enable": true,
-            "speed": 1, // Slow movement
+            "speed": 1,
             "direction": "none",
             "random": false,
             "straight": false,
@@ -54,10 +55,10 @@ particlesJS('particles-js', {
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": false // No interaction effects
+                "enable": false
             },
             "onclick": {
-                "enable": false // No interaction effects
+                "enable": false
             },
             "resize": true
         }
