@@ -1,90 +1,125 @@
-const terminal = document.getElementById('terminal');
-const userInput = document.getElementById('user-input');
-const loadingScreen = document.querySelector('.loading-screen');
-const mainContent = document.querySelectorAll('.navbar, .hero, .generator, .about');
-const asciiArt = document.getElementById('asciiArt');
-
-const asciiArtText = `
- .S_sSSs     .S_SSSs      sSSs    sSSs          sSSSSs    sSSs   .S_sSSs    
-.SS~YS%%b   .SS~SSSSS    d%%SP   d%%SP         d%%%%SP   d%%SP  .SS~YS%%b   
-S%S   \`S%b  S%S   SSSS  d%S'    d%S'          d%S'      d%S'    S%S   \`S%b  
-S%S    S%S  S%S    S%S  S%|     S%|           S%S       S%S     S%S    S%S  
-S%S    d*S  S%S SSSS%S  S&S     S&S           S&S       S&S     S%S    S&S  
-S&S   .S*S  S&S  SSS%S  Y&Ss    Y&Ss          S&S       S&S_Ss  S&S    S&S  
-S&S_sdSSS   S&S    S&S  \`S&&S   \`S&&S         S&S       S&S~SP  S&S    S&S  
-S&S~YSSY    S&S    S&S    \`S*S    \`S*S        S&S sSSs  S&S     S&S    S&S  
-S*S         S*S    S&S     l*S     l*S        S*b \`S%%  S*b     S*S    S*S  
-S*S         S*S    S*S    .S*P    .S*P        S*S   S%  S*S.    S*S    S*S  
-S*S         S*S    S*S  sSS*S   sSS*S          SS_sSSS   SSSbs  S*S    S*S  
-S*S         SSS    S*S  YSS'    YSS'            Y~YSSY    YSSP  S*S    SSS  
-SP                 SP                                           SP          
-Y                  Y                                            Y           
-`;
-
-// Function to display ASCII art with glitch effect
-function displayAsciiArt() {
-    const lines = asciiArtText.trim().split('\n');
-    let html = '';
-    lines.forEach((line, index) => {
-        html += `<span class="ascii-line" style="animation-delay: ${index * 0.1}s;">`;
-        for (let char of line) {
-            if (Math.random() < 0.1) { // 10% chance for each character to be red
-                html += `<span class="red-char" style="animation: glitch 0.3s infinite;">${char}</span>`;
-            } else {
-                html += char;
-            }
-        }
-        html += '</span>';
-    });
-    asciiArt.innerHTML = html;
-}
-
-
-// Simulated loading process
-const loadingSteps = [
-    'Initializing password generator...',
-    'Loading encryption algorithms...',
-    'Calibrating random number generator...',
-    'Establishing secure connection...',
-    'Warming up quantum fluctuator...',
-    'Synchronizing with time servers...',
-    'Patching security vulnerabilities...',
-    'Optimizing for maximum entropy...',
-    'Loading user interface...',
-    'System ready. Press Enter to continue...'
-];
-
-let currentStep = 0;
-
-function simulateLoading() {
-    if (currentStep < loadingSteps.length) {
-        const line = document.createElement('div');
-        line.className = 'line';
-        line.textContent = loadingSteps[currentStep];
-        terminal.appendChild(line);
-        terminal.scrollTop = terminal.scrollHeight;
-        currentStep++;
-        setTimeout(simulateLoading, Math.random() * 500 + 500);
-    } else {
-        userInput.style.display = 'inline-block';
-        userInput.focus();
-    }
-}
-
-userInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        loadingScreen.style.display = 'none';
-        mainContent.forEach(element => element.style.display = 'block');
-        displayAsciiArt();
-    }
-});
-
-// Start the loading simulation
-simulateLoading();
-
-// Password generator logic
 const passwordType = document.getElementById('passwordType');
 const temporaryOptions = document.getElementById('temporaryOptions');
 const secureOptions = document.getElementById('secureOptions');
 const wordCount = document.getElementById('wordCount');
-const wordCountDisplay = document.getElementById('wordCountDisplay
+const wordCountDisplay = document.getElementById('wordCountDisplay');
+const passwordLength = document.getElementById('passwordLength');
+const lengthDisplay = document.getElementById('lengthDisplay');
+const includeUppercase = document.getElementById('includeUppercase');
+const includeNumbers = document.getElementById('includeNumbers');
+const includeSymbols = document.getElementById('includeSymbols');
+const generateBtn = document.getElementById('generateBtn');
+const generatedPassword = document.getElementById('generatedPassword');
+const copyBtn = document.getElementById('copyBtn');
+const strengthBar = document.getElementById('strengthBar');
+
+const words = [
+    "apple", "banana", "cherry", "date", "elder", "fig", "grape", "honey",
+    "iris", "jade", "kiwi", "lemon", "mango", "nest", "olive", "peach",
+    "quilt", "rose", "sage", "tulip", "umbrella", "violet", "willow", "xenia",
+    "yarn", "zinnia", "book", "cat", "dog", "egg", "fish", "goat", "hat",
+    "ink", "jug", "kite", "lamp", "moon", "note", "owl", "pen", "queen",
+    "ring", "sun", "tree", "vase", "well", "box", "yarn", "zoo"
+];
+
+passwordType.addEventListener('change', updateOptions);
+wordCount.addEventListener('input', updateWordCountDisplay);
+passwordLength.addEventListener('input', updateLengthDisplay);
+generateBtn.addEventListener('click', generatePassword);
+copyBtn.addEventListener('click', copyPassword);
+
+function updateOptions() {
+    if (passwordType.value === 'temporary') {
+        temporaryOptions.classList.remove('hidden');
+        secureOptions.classList.add('hidden');
+    } else {
+        temporaryOptions.classList.add('hidden');
+        secureOptions.classList.remove('hidden');
+    }
+}
+
+function updateWordCountDisplay() {
+    wordCountDisplay.textContent = `${wordCount.value} word${wordCount.value > 1 ? 's' : ''}`;
+}
+
+function updateLengthDisplay() {
+    lengthDisplay.textContent = `${passwordLength.value} characters`;
+}
+
+function generatePassword() {
+    let password = '';
+    if (passwordType.value === 'temporary') {
+        password = generateTemporaryPassword();
+    } else {
+        password = generateSecurePassword();
+    }
+    generatedPassword.value = password;
+    updateStrengthMeter(password);
+}
+
+function generateTemporaryPassword() {
+    const selectedWords = [];
+    for (let i = 0; i < wordCount.value; i++) {
+        const randomWord = words[Math.floor(Math.random() * words.length)];
+        selectedWords.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
+    }
+    return selectedWords.join('') + Math.floor(Math.random() * 100).toString().padStart(2, '0');
+}
+
+function generateSecurePassword() {
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+    let chars = lowercase;
+    if (includeUppercase.checked) chars += uppercase;
+    if (includeNumbers.checked) chars += numbers;
+    if (includeSymbols.checked) chars += symbols;
+
+    let password = '';
+    for (let i = 0; i < passwordLength.value; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+}
+
+function copyPassword() {
+    generatedPassword.select();
+    document.execCommand('copy');
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+    }, 2000);
+}
+
+function updateStrengthMeter(password) {
+    const strength = calculatePasswordStrength(password);
+    const percentage = (strength / 4) * 100;
+    strengthBar.style.width = `${percentage}%`;
+    
+    if (strength < 2) {
+        strengthBar.classList.remove('bg-yellow-500', 'bg-green-500');
+        strengthBar.classList.add('bg-red-500');
+    } else if (strength < 3) {
+        strengthBar.classList.remove('bg-red-500', 'bg-green-500');
+        strengthBar.classList.add('bg-yellow-500');
+    } else {
+        strengthBar.classList.remove('bg-red-500', 'bg-yellow-500');
+        strengthBar.classList.add('bg-green-500');
+    }
+}
+
+function calculatePasswordStrength(password) {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++;
+    if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
+    return Math.min(strength, 4);
+}
+
+// Initialize displays
+updateWordCountDisplay();
+updateLengthDisplay();
