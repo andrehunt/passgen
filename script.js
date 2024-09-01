@@ -19,7 +19,10 @@ const words = [
     "quilt", "rose", "sage", "tulip", "umbrella", "violet", "willow", "xenia",
     "yarn", "zinnia", "book", "cat", "dog", "egg", "fish", "goat", "hat",
     "ink", "jug", "kite", "lamp", "moon", "note", "owl", "pen", "queen",
-    "ring", "sun", "tree", "vase", "well", "box", "yarn", "zoo"
+    "ring", "sun", "tree", "vase", "well", "box", "zoo", "flower", "music",
+    "star", "cloud", "mountain", "river", "ocean", "forest", "desert", "snow",
+    "rain", "storm", "wind", "fire", "light", "shadow", "stone", "earth", "sky"
+    // You can continue adding more common words here
 ];
 
 passwordType.addEventListener('change', updateOptions);
@@ -63,7 +66,15 @@ function generateTemporaryPassword() {
         const randomWord = words[Math.floor(Math.random() * words.length)];
         selectedWords.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
     }
-    return selectedWords.join('') + Math.floor(Math.random() * 100).toString().padStart(2, '0');
+
+    // Generate three random numbers
+    const numbers = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+
+    // Add a random symbol
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+
+    return selectedWords.join('') + numbers + symbol;
 }
 
 function generateSecurePassword() {
