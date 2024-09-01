@@ -1,8 +1,8 @@
 /* Global Styles */
 body {
     font-family: 'Courier New', monospace;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #000000; /* Default background color for dark mode */
+    color: #ffffff; /* Default text color for dark mode */
 }
 
 /* Button Styles */
@@ -124,43 +124,36 @@ input[type="range"]::-moz-range-thumb {
     color: #ffffff;
 }
 
-/* Light Mode */
+/* Light Mode (Inverted Colors) */
 body.invert {
-    filter: invert(1) hue-rotate(180deg);
+    background-color: #ffffff; /* White background for light mode */
+    color: #000000; /* Black text for light mode */
 }
 
-body.invert button,
-body.invert .form-checkbox,
-body.invert select,
-body.invert input[type="text"],
-body.invert input[type="range"],
-body.invert #strengthBar {
-    filter: invert(1) hue-rotate(180deg);
+body.invert button {
+    background-color: #0000ff; /* Bright dark blue background in light mode */
+    color: #ffffff; /* White text in light mode */
 }
 
 body.invert select,
 body.invert input[type="text"],
 body.invert input[type="range"] {
-    border-color: #0000ff; /* Blue border in light mode */
-    color: #000000; /* Black text in light mode */
-}
-
-body.invert button {
     background-color: #ffffff; /* White background in light mode */
+    border-color: #0000ff; /* Bright dark blue border in light mode */
     color: #000000; /* Black text in light mode */
 }
 
 body.invert #strengthBar {
-    background-color: #0000ff; /* Blue background in light mode */
+    background-color: #0000ff; /* Bright dark blue background in light mode */
 }
 
 body.invert .form-checkbox {
-    border-color: #0000ff; /* Blue border in light mode */
+    border-color: #0000ff; /* Bright dark blue border in light mode */
 }
 
 body.invert .form-checkbox:checked {
-    background-color: #0000ff; /* Blue background in light mode */
-    border-color: #0000ff; /* Blue border in light mode */
+    background-color: #0000ff; /* Bright dark blue background in light mode */
+    border-color: #0000ff; /* Bright dark blue border in light mode */
 }
 
 /* Theme Toggle Button */
