@@ -1,8 +1,8 @@
 /* Global Styles */
 body {
     font-family: 'Courier New', monospace;
-    background-color: #000000; /* Default background color for dark mode */
-    color: #ffffff; /* Default text color for dark mode */
+    background-color: #000000;
+    color: #ffffff;
 }
 
 /* Button Styles */
@@ -72,7 +72,7 @@ input[type="range"] {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: #333333;
+    background: #333333; /* Default dark background for track in dark mode */
     outline: none;
     opacity: 0.7;
     transition: opacity .2s;
@@ -82,13 +82,21 @@ input[type="range"]:hover {
     opacity: 1;
 }
 
+input[type="range"]::-webkit-slider-runnable-track {
+    background: #333333; /* Dark background for track in dark mode */
+}
+
+input[type="range"]::-moz-range-track {
+    background: #333333; /* Dark background for track in dark mode */
+}
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff0000;
+    background: #ff0000; /* Red background for thumb in dark mode */
     cursor: pointer;
 }
 
@@ -96,7 +104,7 @@ input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff0000;
+    background: #ff0000; /* Red background for thumb in dark mode */
     cursor: pointer;
 }
 
@@ -124,36 +132,30 @@ input[type="range"]::-moz-range-thumb {
     color: #ffffff;
 }
 
-/* Light Mode (Inverted Colors) */
+/* Light Mode Styles (Inverted Colors) */
 body.invert {
-    background-color: #ffffff; /* White background for light mode */
-    color: #000000; /* Black text for light mode */
+    filter: invert(1) hue-rotate(180deg);
 }
 
-body.invert button {
-    background-color: #0000ff; /* Bright dark blue background in light mode */
-    color: #ffffff; /* White text in light mode */
-}
-
-body.invert select,
-body.invert input[type="text"],
+/* Slider Input for Light Mode */
 body.invert input[type="range"] {
-    background-color: #ffffff; /* White background in light mode */
-    border-color: #0000ff; /* Bright dark blue border in light mode */
-    color: #000000; /* Black text in light mode */
+    background: #ffffff; /* White background for track in light mode */
 }
 
-body.invert #strengthBar {
-    background-color: #0000ff; /* Bright dark blue background in light mode */
+body.invert input[type="range"]::-webkit-slider-runnable-track {
+    background: #ffffff; /* White background for track in light mode */
 }
 
-body.invert .form-checkbox {
-    border-color: #0000ff; /* Bright dark blue border in light mode */
+body.invert input[type="range"]::-moz-range-track {
+    background: #ffffff; /* White background for track in light mode */
 }
 
-body.invert .form-checkbox:checked {
-    background-color: #0000ff; /* Bright dark blue background in light mode */
-    border-color: #0000ff; /* Bright dark blue border in light mode */
+body.invert input[type="range"]::-webkit-slider-thumb {
+    background: #0000ff; /* Bright dark blue background for thumb in light mode */
+}
+
+body.invert input[type="range"]::-moz-range-thumb {
+    background: #0000ff; /* Bright dark blue background for thumb in light mode */
 }
 
 /* Theme Toggle Button */
