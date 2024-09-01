@@ -102,6 +102,8 @@ input[type="range"]::-webkit-slider-thumb {
     background: #ff0000; /* Red background for thumb in dark mode */
     cursor: pointer;
     transition: background 0.3s;
+    position: relative;
+    z-index: 2; /* Ensure thumb is above other elements */
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -110,6 +112,8 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 50%;
     background: #ff0000; /* Red background for thumb in dark mode */
     cursor: pointer;
+    position: relative;
+    z-index: 2; /* Ensure thumb is above other elements */
 }
 
 /* Strength Meter */
@@ -143,14 +147,7 @@ body.invert {
     color: #000000;
 }
 
-body.invert select,
-body.invert input[type="text"],
-body.invert input[type="range"] {
-    background-color: #ffffff; /* Light background for inputs in light mode */
-    border-color: #0000ff; /* Dark blue border in light mode */
-    color: #000000; /* Black text in light mode */
-}
-
+/* Slider Input for Light Mode */
 body.invert input[type="range"] {
     background: #cccccc; /* Light background for track in light mode */
 }
@@ -164,37 +161,31 @@ body.invert input[type="range"]::-moz-range-track {
 }
 
 body.invert input[type="range"]::-webkit-slider-thumb {
-    background: #0000ff; /* Dark blue background for thumb in light mode */
+    background: #0000ff; /* Bright dark blue background for thumb in light mode */
 }
 
 body.invert input[type="range"]::-moz-range-thumb {
-    background: #0000ff; /* Dark blue background for thumb in light mode */
-}
-
-body.invert .form-checkbox {
-    border: 2px solid #0000ff; /* Dark blue border in light mode */
-}
-
-body.invert .form-checkbox:checked {
-    background-color: #0000ff; /* Dark blue background for checked checkbox in light mode */
-    border-color: #0000ff; /* Dark blue border for checked checkbox in light mode */
-}
-
-body.invert button {
-    background-color: #ffffff; /* White background for buttons in light mode */
-    color: #000000; /* Black text for buttons in light mode */
-}
-
-body.invert button:hover {
-    background-color: #cccccc; /* Light gray on hover in light mode */
-}
-
-body.invert #strengthBar {
-    background-color: #0000ff; /* Dark blue background for strength bar in light mode */
+    background: #0000ff; /* Bright dark blue background for thumb in light mode */
 }
 
 /* Theme Toggle Button */
 #themeToggle {
     background-color: #333333; /* Dark background for theme toggle button */
     color: #ffffff;
+}
+
+/* Adjust Button Focus */
+body.invert button:focus {
+    box-shadow: 0 0 5px #0000ff; /* Blue glow when focused in light mode */
+}
+
+/* Adjust Input Focus */
+body.invert select:focus,
+body.invert input[type="text"]:focus {
+    box-shadow: 0 0 5px #0000ff; /* Blue shadow when focused in light mode */
+}
+
+/* Adjust Button Hover */
+body.invert button:hover {
+    background-color: #cccccc; /* Light background on hover in light mode */
 }
