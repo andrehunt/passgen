@@ -5,14 +5,27 @@ body {
     color: #ffffff;
 }
 
+/* Button Styles */
+button {
+    background-color: #121212; /* Dark background for button */
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+button:hover {
+    background-color: #333333; /* Slightly lighter on hover */
+}
+
 /* Form Inputs */
 select,
 input[type="text"],
-input[type="range"],
-button {
+input[type="range"] {
     background-color: #121212; /* Light black background */
     border-color: #ff0000; /* Red border */
-    color: white; /* White text */
+    color: #ffffff; /* White text */
 }
 
 /* Focus States */
@@ -87,12 +100,14 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
-/* Button Styles */
-button {
-    background-color: #ff0000; /* Red background */
-    border: none;
-    color: white;
-    cursor: pointer;
+/* Strength Meter */
+#wrapper #strengthMeter {
+    background-color: #121212; /* Dark background for strength meter */
+    border-radius: 9999px;
+}
+
+#strengthBar {
+    background-color: #ff0000; /* Red background for strength meter */
 }
 
 /* Ascii Art */
@@ -108,78 +123,14 @@ button {
     font-family: 'Courier New', Courier, monospace; /* Monospaced font */
     color: #ffffff;
 }
-/* Default Dark Mode Styles */
-body.dark-mode {
-    background-color: #000000;
+
+/* Light Mode (Inverted Colors) */
+body.invert {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Theme Toggle Button */
+#themeToggle {
+    background-color: #333333; /* Dark background for theme toggle button */
     color: #ffffff;
-}
-
-body.dark-mode .bg-black {
-    background-color: #121212; /* Darker black for contrast */
-}
-
-body.dark-mode .bg-red-600 {
-    background-color: #ff0000; /* Red accent */
-}
-
-body.dark-mode .bg-red-700 {
-    background-color: #e60000; /* Darker red accent */
-}
-
-body.dark-mode .border-red-600 {
-    border-color: #ff0000; /* Red border */
-}
-
-body.dark-mode .text-red-600 {
-    color: #ff0000; /* Red text */
-}
-
-/* Light Mode Styles */
-body.light-mode {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-body.light-mode .bg-black {
-    background-color: #ffffff; /* White background */
-}
-
-body.light-mode .bg-red-600 {
-    background-color: #0000ff; /* Blue accent */
-}
-
-body.light-mode .bg-red-700 {
-    background-color: #0000cc; /* Darker blue accent */
-}
-
-body.light-mode .border-red-600 {
-    border-color: #0000ff; /* Blue border */
-}
-
-body.light-mode .text-red-600 {
-    color: #0000ff; /* Blue text */
-}
-
-/* General Styles */
-button {
-    background-color: #121212; /* Dark background for button */
-    border: none;
-    color: #ffffff;
-}
-
-button:hover {
-    background-color: #333333; /* Slightly lighter on hover */
-}
-
-/* Slider Input */
-input[type="range"] {
-    background: #333333; /* Slider background */
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    background: #ff0000; /* Slider thumb color */
-}
-
-input[type="range"]::-moz-range-thumb {
-    background: #ff0000; /* Slider thumb color */
 }
