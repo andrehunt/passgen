@@ -22,26 +22,41 @@ const words = [
     "wind", "zoo", "action", "artist", "bottle", "bridge", "dream", "family", "gift", "magic", "movie", "music", "party",
     "place", "plan", "record", "shirt", "simple", "sport", "story", "train",
     "view", "zone", "running", "walking", "talking", "reading", "jumping",
-    "flying", "hearing", "finding", "bird", "lion", "tiger", "wolf", "bear"
+    "flying", "hearing", "finding", "bird", "lion", "tiger", "wolf", "fox",
+    "rabbit", "squirrel", "panda", "zebra", "penguin", "owl", "eagle", "hawk",
+    "parrot", "pigeon", "goose"
 ];
 
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
-        const numWords = parseInt(wordCount.value);
+        // Generate a simple password
+        const numWords = 2;
+        const selectedWords = [];
         for (let i = 0; i < numWords; i++) {
-            password += words[Math.floor(Math.random() * words.length)] + ' ';
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            selectedWords.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
         }
-        password = password.trim();
+        const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+        const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+        password = selectedWords.join('') + numbers + symbol;
     } else {
+        // Generate a complex password
         const length = parseInt(passwordLength.value);
-        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
+        
+        let chars = lowercase;
+        if (includeUppercase.checked) chars += uppercase;
+        if (includeNumbers.checked) chars += numbers + '123456789';
+        if (includeSymbols.checked) chars += symbols;
+        
         for (let i = 0; i < length; i++) {
             password += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-        if (includeUppercase.checked) password = password.toUpperCase();
-        if (includeNumbers.checked) password += '0123456789';
-        if (includeSymbols.checked) password += '!@#$%^&*()_+[]{}|;:,.<>?';
     }
     generatedPassword.value = password;
     updateStrengthMeter(password);
