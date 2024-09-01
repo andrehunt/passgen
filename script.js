@@ -77,12 +77,12 @@ const generatedPassword = document.getElementById('generatedPassword');
 const copyBtn = document.getElementById('copyBtn');
 const strengthMeter = document.getElementById('strengthMeter');
 const strengthBar = document.getElementById('strengthBar');
+
 const themeToggleButton = document.getElementById('themeToggle');
 
 themeToggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('blue-theme');
+    document.body.classList.toggle('invert');
 });
-
 
 passwordType.addEventListener('change', function() {
     if (this.value === 'temporary') {
@@ -95,11 +95,11 @@ passwordType.addEventListener('change', function() {
 });
 
 wordCount.addEventListener('input', function() {
-    wordCountDisplay.textContent = `${this.value} words`;
+    wordCountDisplay.textContent = ${this.value} words;
 });
 
 passwordLength.addEventListener('input', function() {
-    lengthDisplay.textContent = `${this.value} characters`;
+    lengthDisplay.textContent = ${this.value} characters;
 });
 
 generateBtn.addEventListener('click', function() {
@@ -139,7 +139,7 @@ function generateSecurePassword(length) {
 
 function updateStrengthMeter(password) {
     const strength = calculateStrength(password);
-    strengthBar.style.width = `${strength}%`;
+    strengthBar.style.width = ${strength}%;
     if (strength < 30) {
         strengthBar.style.backgroundColor = 'red';
     } else if (strength < 70) {
