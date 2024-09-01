@@ -1,9 +1,16 @@
-/* Global Styles */
+/* Dark Mode (default) */
 body {
     font-family: 'Courier New', monospace;
     background-color: #000000;
     color: #ffffff;
     transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light Mode */
+.blue-theme {
+    filter: invert(1) hue-rotate(180deg);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Button Styles */
@@ -21,52 +28,32 @@ button:hover {
     background-color: #333333; /* Slightly lighter on hover */
 }
 
-/* Form Inputs */
-select,
-input[type="text"],
-input[type="range"] {
-    background-color: #121212; /* Light black background */
-    border-color: #ff0000; /* Red border */
-    color: #ffffff; /* White text */
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+/* Light Mode Styles */
+.blue-theme button {
+    background-color: #0000ff; /* Blue background in light mode */
+    border: none;
+    color: #ffffff;
 }
 
-/* Focus States */
-select:focus,
-input[type="text"]:focus,
-button:focus {
-    outline: none;
-    box-shadow: 0 0 5px #ff0000; /* Red shadow when focused */
+.blue-theme button:hover {
+    background-color: #0000cc; /* Darker blue on hover in light mode */
 }
 
-/* Custom Checkbox */
-.form-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 2px solid #ff0000;
-    border-radius: 0.25rem;
-    outline: none;
-    transition: all 0.2s ease-in-out;
-    position: relative;
-    cursor: pointer;
+.blue-theme #generateBtn {
+    background-color: #0000ff; /* Ensure blue background for generate button */
 }
 
-.form-checkbox:checked {
-    background-color: #ff0000;
-    border-color: #ff0000;
+.blue-theme #generateBtn:hover {
+    background-color: #0000cc; /* Ensure darker blue on hover */
 }
 
-.form-checkbox:checked::after {
-    content: '\2714';
-    font-size: 1rem;
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.blue-theme #themeToggle {
+    background-color: #0000cc; /* Blue background for theme toggle button in light mode */
+    color: #ffffff;
+}
+
+.blue-theme #themeToggle:hover {
+    background-color: #000099; /* Darker blue on hover */
 }
 
 /* Slider Input */
@@ -116,82 +103,23 @@ input[type="range"]::-moz-range-thumb {
     z-index: 2; /* Ensure thumb is above other elements */
 }
 
-/* Strength Meter */
-#wrapper #strengthMeter {
-    background-color: #121212; /* Dark background for strength meter */
-    border-radius: 9999px;
-}
-
-#strengthBar {
-    background-color: #ff0000; /* Red background for strength meter */
-}
-
-/* Ascii Art */
-.ascii-art-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.ascii-art {
-    font-family: 'Courier New', Courier, monospace; /* Monospaced font */
-    color: #ffffff;
-}
-
-/* Light Mode Styles (Invert Red to Blue) */
-body.invert {
-    filter: invert(1) hue-rotate(180deg);
-    background-color: #ffffff;
-    color: #000000;
-}
-
-/* Slider Input for Light Mode */
-body.invert input[type="range"] {
+/* Light Mode Slider Input */
+.blue-theme input[type="range"] {
     background: #cccccc; /* Light background for track in light mode */
 }
 
-body.invert input[type="range"]::-webkit-slider-runnable-track {
+.blue-theme input[type="range"]::-webkit-slider-runnable-track {
     background: #cccccc; /* Light background for track in light mode */
 }
 
-body.invert input[type="range"]::-moz-range-track {
+.blue-theme input[type="range"]::-moz-range-track {
     background: #cccccc; /* Light background for track in light mode */
 }
 
-body.invert input[type="range"]::-webkit-slider-thumb {
+.blue-theme input[type="range"]::-webkit-slider-thumb {
     background: #0000ff; /* Bright dark blue background for thumb in light mode */
 }
 
-body.invert input[type="range"]::-moz-range-thumb {
+.blue-theme input[type="range"]::-moz-range-thumb {
     background: #0000ff; /* Bright dark blue background for thumb in light mode */
-}
-
-/* Button Adjustments for Light Mode */
-body.invert button {
-    background-color: #0000ff; /* Blue background in light mode */
-    border: none;
-    color: #ffffff;
-}
-
-body.invert button:hover {
-    background-color: #0000cc; /* Darker blue on hover in light mode */
-}
-
-body.invert #generateBtn {
-    background-color: #0000ff; /* Ensure blue background for generate button */
-}
-
-body.invert #generateBtn:hover {
-    background-color: #0000cc; /* Ensure darker blue on hover */
-}
-
-body.invert #themeToggle {
-    background-color: #0000cc; /* Blue background for theme toggle button in light mode */
-    color: #ffffff;
-}
-
-body.invert #themeToggle:hover {
-    background-color: #000099; /* Darker blue on hover */
 }
