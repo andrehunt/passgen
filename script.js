@@ -14,16 +14,25 @@ const copyBtn = document.getElementById('copyBtn');
 const strengthBar = document.getElementById('strengthBar');
 
 const words = [
-    "apple", "banana", "cherry", "date", "elder", "fig", "grape", "honey",
-    "iris", "jade", "kiwi", "lemon", "mango", "nest", "olive", "peach",
-    "quilt", "rose", "sage", "tulip", "umbrella", "violet", "willow", "xenia",
-    "yarn", "zinnia", "book", "cat", "dog", "egg", "fish", "goat", "hat",
-    "ink", "jug", "kite", "lamp", "moon", "note", "owl", "pen", "queen",
-    "ring", "sun", "tree", "vase", "well", "box", "zoo", "flower", "music",
-    "star", "cloud", "mountain", "river", "ocean", "forest", "desert", "snow",
-    "rain", "storm", "wind", "fire", "light", "shadow", "stone", "earth", "sky"
-    // You can continue adding more common words here
+    "example", "apple", "beach", "book", "chair", "cloud", "coffee", "dog",
+    "door", "house", "light", "moon", "mountain", "paper", "plant", "rain",
+    "road", "sky", "star", "table", "tree", "water", "window", "world", "air",
+    "ball", "cat", "city", "day", "ear", "egg", "eye", "fire", "floor", "friend",
+    "garden", "glass", "hand", "hill", "ice", "key", "leaf", "man", "mouse",
+    "name", "night", "nose", "park", "pen", "phone", "river", "room", "sand",
+    "school", "sea", "shoe", "snow", "sound", "street", "sun", "tail", "tea",
+    "toy", "wind", "yard", "zoo", "action", "artist", "bottle", "bridge", "camera",
+    "country", "dance", "desk", "doctor", "dream", "engine", "family", "flag",
+    "food", "game", "gift", "ground", "hobby", "idea", "internet", "joke", "king",
+    "lunch", "magic", "movie", "music", "net", "party", "place", "plan",
+    "question", "record", "shirt", "simple", "sport", "story", "ticket", "train",
+    "user", "view", "week", "wish", "zone", "running", "walking", "talking",
+    "writing", "reading", "jumping", "flying", "swimming", "playing", "driving",
+    "bringing", "taking", "seeing", "hearing", "making", "finding", "giving",
+    "calling", "turning", "working", "camel", "panda", "zebra", "penguin",
+    "owl", "eagle", "hawk", "parrot", "pigeon", "goose"
 ];
+
 
 passwordType.addEventListener('change', updateOptions);
 wordCount.addEventListener('input', updateWordCountDisplay);
