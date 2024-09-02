@@ -30,8 +30,8 @@ const words = [
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
-        // Generate a simple password
-        const numWords = parseInt(wordCount.value); // Get the number of words from the slider
+        // Get the number of words from the slider
+        const numWords = parseInt(wordCount.value);
         const selectedWords = [];
         for (let i = 0; i < numWords; i++) {
             const randomWord = words[Math.floor(Math.random() * words.length)];
@@ -61,6 +61,7 @@ function generatePassword() {
     generatedPassword.value = password;
     updateStrengthMeter(password);
 }
+
 
 
 function updateStrengthMeter(password) {
