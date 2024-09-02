@@ -13,6 +13,12 @@ const generatedPassword = document.getElementById('generatedPassword');
 const copyBtn = document.getElementById('copyBtn');
 const strengthBar = document.getElementById('strengthBar');
 
+const invertBtn = document.getElementById('invertBtn');
+
+invertBtn.addEventListener('click', () => {
+    document.body.classList.toggle('inverted');
+});
+
 const words = [
     "apple", "beach", "book", "cloud", "coffee", "dog", "door", "house",
     "light", "moon", "mountain", "paper", "plant", "rain", "road", "sky",
