@@ -15,8 +15,9 @@ const strengthBar = document.getElementById('strengthBar');
 
 const invertBtn = document.getElementById('invertBtn');
 
-invertBtn.addEventListener('click', () => {
-    document.body.classList.toggle('inverted');
+
+document.getElementById("invertBtn").addEventListener("click", function() {
+    document.body.classList.toggle("inverted");
 });
 
 
