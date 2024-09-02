@@ -104,6 +104,25 @@ button {
     margin-bottom: 1rem;
 }
 
+.inverted {
+    filter: invert(1);
+    background-color: #ffffff; /* Adjust background color */
+    color: #000000; /* Adjust text color */
+}
+
+.inverted input,
+.inverted select,
+.inverted button {
+    background-color: #ffffff;
+    border-color: #000000;
+    color: #000000;
+}
+
+.inverted .form-checkbox:checked {
+    background-color: #000000;
+    border-color: #000000;
+}
+
 .ascii-art {
     font-family: 'Courier New', Courier, monospace; /* Monospaced font */
     color: #ffffff;
