@@ -106,8 +106,9 @@ button {
 
 .inverted {
     filter: invert(1);
-    background-color: #ffffff; /* Adjust background color */
-    color: #000000; /* Adjust text color */
+    background-color: #ffffff;
+    color: #000000;
+    transition: filter 0.5s ease-in-out, background-color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 .inverted input,
@@ -116,12 +117,15 @@ button {
     background-color: #ffffff;
     border-color: #000000;
     color: #000000;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
 }
 
 .inverted .form-checkbox:checked {
     background-color: #000000;
     border-color: #000000;
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
 }
+
 
 .ascii-art {
     font-family: 'Courier New', Courier, monospace; /* Monospaced font */
