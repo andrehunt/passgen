@@ -19,6 +19,7 @@ invertBtn.addEventListener('click', () => {
     document.body.classList.toggle('inverted');
 });
 
+
 const words = [
     "apple", "beach", "book", "cloud", "coffee", "dog", "door", "house",
     "light", "moon", "mountain", "paper", "plant", "rain", "road", "sky",
@@ -32,6 +33,8 @@ const words = [
     "rabbit", "squirrel", "panda", "zebra", "penguin", "owl", "eagle", "hawk",
     "parrot", "pigeon", "goose"
 ];
+
+
 
 function generatePassword() {
     let password = '';
