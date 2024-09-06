@@ -66,74 +66,71 @@ const words = [
 
 // Password generation
 async function generatePassword() {
-    let finalPassword = '';
     const animationDuration = 30; // ms
     const maxIterations = 50;
-
-    // Create an animation for generating password parts
-    const animatePart = (partGenerator) => {
+    
+    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
+    
+    let finalPassword = '';
+    
+    const animatePart = (generator) => {
         return new Promise((resolve) => {
             let iteration = 0;
-            const animate = () => {
-                if (iteration >= maxIterations) {
-                    resolve();
-                    return;
-                }
-                finalPassword = partGenerator();
+            const interval = setInterval(() => {
+                finalPassword = generator();
                 generatedPassword.value = finalPassword;
-                iteration++;
-                requestAnimationFrame(() => setTimeout(animate, animationDuration));
-            };
-            animate();
+                if (++iteration >= maxIterations) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, animationDuration);
         });
     };
-
-    const generateTemporaryPart = () => {
-        const numWords = parseInt(wordCount.value);
-        const selectedWords = [];
-
-        for (let i = 0; i < numWords; i++) {
-            let randomWord = words[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * words.length)];
-            randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
-            selectedWords.push(randomWord);
-        }
-
-        const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
-        const symbols = '!@#$+';
-        const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
-        const separators = ['-', '&', '$', '#', '=', '@'];
-        const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
-
-        return () => selectedWords.join(randomSeparator) + numbers + symbol;
-    };
-
-    const generateSecurePart = () => {
-        const length = parseInt(passwordLength.value);
-        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const numbers = '0123456789';
-        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-
-        let chars = lowercase;
-        if (includeUppercase.checked) chars += uppercase;
-        if (includeNumbers.checked) chars += numbers;
-        if (includeSymbols.checked) chars += symbols;
-
-        return () => {
-            let securePassword = '';
-            for (let i = 0; i < length; i++) {
-                securePassword += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
-            }
-            return securePassword;
-        };
-    };
-
-    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
-
-    // Animate each part of the password generation
+    
+    // Start animation
     await animatePart(partGenerator);
     updateStrengthMeter(finalPassword);
 }
+
+const generateTemporaryPart = () => {
+    const numWords = parseInt(wordCount.value);
+    const selectedWords = [];
+
+    for (let i = 0; i < numWords; i++) {
+        let randomWord = words[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * words.length)];
+        randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
+        selectedWords.push(randomWord);
+    }
+
+    const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
+    const symbols = '!@#$+';
+    const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
+    const separators = ['-', '&', '$', '#', '=', '@'];
+    const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
+
+    return () => selectedWords.join(randomSeparator) + numbers + symbol;
+};
+
+const generateSecurePart = () => {
+    const length = parseInt(passwordLength.value);
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+    let chars = lowercase;
+    if (includeUppercase.checked) chars += uppercase;
+    if (includeNumbers.checked) chars += numbers;
+    if (includeSymbols.checked) chars += symbols;
+
+    return () => {
+        let securePassword = '';
+        for (let i = 0; i < length; i++) {
+            securePassword += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
+        }
+        return securePassword;
+    };
+};
 
 async function copyToClipboard() {
     try {
@@ -144,7 +141,6 @@ async function copyToClipboard() {
     }
 }
 
-// Password strength meter update
 function updateStrengthMeter(password) {
     const strength = calculatePasswordStrength(password);
     const percentage = (strength / 4) * 100;
@@ -153,7 +149,6 @@ function updateStrengthMeter(password) {
     strengthBar.textContent = ''; // No text in the bar
 }
 
-// Password strength calculation
 function calculatePasswordStrength(password) {
     let strength = 0;
     if (password.length >= 8) strength++;
@@ -166,12 +161,6 @@ function calculatePasswordStrength(password) {
     if (password.length >= 16) strength++; // Longer password
 
     return Math.min(strength, 8); // Cap strength at 8
-}
-
-// Clipboard copy function
-function copyToClipboard() {
-    generatedPassword.select();
-    document.execCommand('copy');
 }
 
 // Event listeners
