@@ -65,8 +65,8 @@ const words = [
 ];
 
 // Password generation
-function generatePassword() {
-    let password = '';
+async function generatePassword() {
+    let finalPassword = '';
     const animationDuration = 30; // ms
     const maxIterations = 50;
 
@@ -74,8 +74,8 @@ function generatePassword() {
         return new Promise((resolve) => {
             let iteration = 0;
             const interval = setInterval(() => {
-                password = partGenerator();
-                generatedPassword.value = password;
+                finalPassword = partGenerator();
+                generatedPassword.value = finalPassword;
                 if (++iteration >= maxIterations) {
                     clearInterval(interval);
                     resolve();
@@ -127,11 +127,8 @@ function generatePassword() {
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
 
     // Animate each part of the password generation
-    (async () => {
-        await animatePart(partGenerator);
-        generatedPassword.value = password;
-        updateStrengthMeter(password);
-    })();
+    await animatePart(partGenerator);
+    updateStrengthMeter(finalPassword);
 }
 
 async function copyToClipboard() {
