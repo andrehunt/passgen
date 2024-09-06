@@ -68,28 +68,33 @@ async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
     
-    let finalPassword = '';
-    
+    // Determine which part generator function to use
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
     
-    const animatePart = (generator) => {
-        return new Promise((resolve) => {
-            let iteration = 0;
-            const interval = setInterval(() => {
-                finalPassword = generator();
-                generatedPassword.value = finalPassword;
-                if (++iteration >= maxIterations) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, animationDuration);
-        });
-    };
+    let finalPassword = '';
     
-    // Start animation
-    await animatePart(partGenerator);
+    // Animate the password generation
+    await animatePart(() => {
+        finalPassword = partGenerator();
+        generatedPassword.value = finalPassword;
+    });
+    
+    // Update the strength meter with the final password
     updateStrengthMeter(finalPassword);
 }
+
+const animatePart = (generator) => {
+    return new Promise((resolve) => {
+        let iteration = 0;
+        const interval = setInterval(() => {
+            generator();
+            if (++iteration >= maxIterations) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 30);
+    });
+};
 
 const generateTemporaryPart = () => {
     const numWords = parseInt(wordCount.value);
@@ -108,7 +113,6 @@ const generateTemporaryPart = () => {
     const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
 
     return () => {
-        // Ensure generator function returns a new password each time
         return selectedWords.join(randomSeparator) + numbers + symbol;
     };
 };
@@ -133,7 +137,6 @@ const generateSecurePart = () => {
         return securePassword;
     };
 };
-
 
 generateBtn.addEventListener('click', generatePassword);
 
