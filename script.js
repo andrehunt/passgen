@@ -79,7 +79,7 @@ function generatePassword() {
             // Less frequent capitalization (20% chance for each letter to be capitalized)
             randomWord = randomWord
                 .split('')
-                .map(char => (Math.random() > 0.4 ? char.toUpperCase() : char))
+                .map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)) // 20% chance
                 .join('');
 
             selectedWords.push(randomWord);
@@ -89,8 +89,14 @@ function generatePassword() {
         const symbols = '!@#$+';
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
 
-        // Join words with a dash
-        password = selectedWords.join('-', '&', '$', '#', '=', '@') + numbers + symbol;
+        // Possible word separators
+        const separators = ['-', '&', '$', '#', '=', '@'];
+
+        // Randomly choose a separator for joining words
+        const randomSeparator = separators[Math.floor(Math.random() * separators.length)];
+
+        // Join words with a random separator
+        password = selectedWords.join(randomSeparator) + numbers + symbol;
     } else {
         // Generate a complex password (unchanged)
         const length = parseInt(passwordLength.value);
@@ -111,6 +117,7 @@ function generatePassword() {
     generatedPassword.value = password;
     updateStrengthMeter(password);
 }
+
 
 
 
