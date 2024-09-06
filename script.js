@@ -65,6 +65,18 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
+function generatePasswordWithAnimation() {
+    let attempts = 0;
+    const maxAttempts = 10;
+    const interval = setInterval(() => {
+        generatePassword();
+        attempts++;
+        if (attempts >= maxAttempts) {
+            clearInterval(interval);  // Stop the animation
+        }
+    }, 100);  // Generates a new password every 100ms
+}
+
 
 function generatePassword() {
     let password = '';
