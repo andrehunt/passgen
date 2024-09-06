@@ -64,29 +64,30 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
+// Password generation
 async function generatePassword() {
+    let finalPassword = '';
     const animationDuration = 30; // ms
     const maxIterations = 50;
-    
-    // This will hold the final password result
-    let finalPassword = '';
 
-    // Function to run the animation
-    const animatePart = async (partGenerator) => {
+    // Create an animation for generating password parts
+    const animatePart = (partGenerator) => {
         return new Promise((resolve) => {
             let iteration = 0;
-            const interval = setInterval(() => {
-                finalPassword = partGenerator(); // Update the final password
-                generatedPassword.value = finalPassword; // Show the animated password
-                if (++iteration >= maxIterations) {
-                    clearInterval(interval);
+            const animate = () => {
+                if (iteration >= maxIterations) {
                     resolve();
+                    return;
                 }
-            }, animationDuration);
+                finalPassword = partGenerator();
+                generatedPassword.value = finalPassword;
+                iteration++;
+                requestAnimationFrame(() => setTimeout(animate, animationDuration));
+            };
+            animate();
         });
     };
 
-    // Define password parts
     const generateTemporaryPart = () => {
         const numWords = parseInt(wordCount.value);
         const selectedWords = [];
@@ -127,15 +128,10 @@ async function generatePassword() {
         };
     };
 
-    // Select the appropriate part generator
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
 
-    // Run the animation
+    // Animate each part of the password generation
     await animatePart(partGenerator);
-    
-    // Finalize the password and update the strength meter
-    finalPassword = partGenerator();
-    generatedPassword.value = finalPassword;
     updateStrengthMeter(finalPassword);
 }
 
