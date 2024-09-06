@@ -15,7 +15,7 @@ const strengthBar = document.getElementById('strengthBar');
 const invertBtn = document.getElementById('invertBtn');
 
 // Color inversion button
-document.getElementById("invertBtn").addEventListener("click", function() {
+invertBtn.addEventListener("click", function() {
     document.body.classList.toggle("inverted");
 });
 
@@ -64,67 +64,75 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
+// Password generation
 function generatePassword() {
     let password = '';
-    let finalPassword = '';
-    const numWords = parseInt(wordCount.value);
-    const symbols = '!@#$+';
-    const separators = ['-', '&', '$', '#', '=', '@'];
+    const animationDuration = 30; // ms
+    const maxIterations = 50;
 
-    // Update the generatedPassword field with animation
-    function animateField(field, values, finalValue, delay, iterations) {
-        let count = 0;
-        const interval = setInterval(() => {
-            if (count >= iterations) {
-                clearInterval(interval);
-                field.value = finalValue;
-                return;
+    const animatePart = (partGenerator) => {
+        return new Promise((resolve) => {
+            let iteration = 0;
+            const interval = setInterval(() => {
+                password = partGenerator();
+                generatedPassword.value = password;
+                if (++iteration >= maxIterations) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, animationDuration);
+        });
+    };
+
+    const generateTemporaryPart = () => {
+        const numWords = parseInt(wordCount.value);
+        const selectedWords = [];
+
+        for (let i = 0; i < numWords; i++) {
+            let randomWord = words[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * words.length)];
+            randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
+            selectedWords.push(randomWord);
+        }
+
+        const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
+        const symbols = '!@#$+';
+        const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
+        const separators = ['-', '&', '$', '#', '=', '@'];
+        const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
+
+        return () => selectedWords.join(randomSeparator) + numbers + symbol;
+    };
+
+    const generateSecurePart = () => {
+        const length = parseInt(passwordLength.value);
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+        let chars = lowercase;
+        if (includeUppercase.checked) chars += uppercase;
+        if (includeNumbers.checked) chars += numbers;
+        if (includeSymbols.checked) chars += symbols;
+
+        return () => {
+            let securePassword = '';
+            for (let i = 0; i < length; i++) {
+                securePassword += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
             }
-            field.value = values[Math.floor(Math.random() * values.length)];
-            count++;
-        }, delay);
-    }
+            return securePassword;
+        };
+    };
+
+    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
 
     // Animate each part of the password generation
-    function animatePasswordParts() {
-        // Words animation
-        const wordArray = words;
-        const selectedWords = [];
-        const wordValues = Array.from({ length: 10 }, () => wordArray[Math.floor(Math.random() * wordArray.length)]);
-        animateField(generatedPassword, wordValues, '', 30, 20);
-        setTimeout(() => {
-            for (let i = 0; i < numWords; i++) {
-                let randomWord = wordArray[Math.floor(Math.random() * wordArray.length)];
-                randomWord = randomWord.split('').map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)).join('');
-                selectedWords.push(randomWord);
-            }
-            finalPassword += selectedWords.join('-');
-            
-            // Numbers animation
-            const numberValues = Array.from({ length: 10 }, () => Math.floor(Math.random() * 900) + 100);
-            animateField(generatedPassword, numberValues.map(num => num.toString()), '', 30, 20);
-            setTimeout(() => {
-                const numbers = Math.floor(Math.random() * 900) + 100;
-                finalPassword += numbers;
-                
-                // Symbol animation
-                const symbolValues = Array.from({ length: 10 }, () => symbols.charAt(Math.floor(Math.random() * symbols.length)));
-                animateField(generatedPassword, symbolValues, '', 30, 20);
-                setTimeout(() => {
-                    const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-                    finalPassword += symbol;
-
-                    // Set the final password value
-                    generatedPassword.value = finalPassword;
-                    updateStrengthMeter(finalPassword);
-                }, 600); // Adjust delay for symbols animation
-            }, 600); // Adjust delay for numbers animation
-        }, 600); // Adjust delay for words animation
-    }
-
-    animatePasswordParts();
+    (async () => {
+        await animatePart(partGenerator);
+        generatedPassword.value = password;
+        updateStrengthMeter(password);
+    })();
 }
-
 
 async function copyToClipboard() {
     try {
@@ -134,7 +142,6 @@ async function copyToClipboard() {
         console.error('Failed to copy password: ', err);
     }
 }
-
 
 // Password strength meter update
 function updateStrengthMeter(password) {
