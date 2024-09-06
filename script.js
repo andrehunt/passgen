@@ -64,21 +64,19 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
-// Password generation
 async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
     
-    // Choose generator based on password type
-    const generator = passwordType.value === 'temporary' ? generateTemporaryPart : generateSecurePart;
-    
     let finalPassword = '';
     
-    const animatePart = (generatorFunction) => {
+    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
+    
+    const animatePart = (generator) => {
         return new Promise((resolve) => {
             let iteration = 0;
             const interval = setInterval(() => {
-                finalPassword = generatorFunction();
+                finalPassword = generator();
                 generatedPassword.value = finalPassword;
                 if (++iteration >= maxIterations) {
                     clearInterval(interval);
@@ -89,7 +87,7 @@ async function generatePassword() {
     };
     
     // Start animation
-    await animatePart(generator());
+    await animatePart(partGenerator);
     updateStrengthMeter(finalPassword);
 }
 
@@ -109,7 +107,9 @@ const generateTemporaryPart = () => {
     const separators = ['-', '&', '$', '#', '=', '@'];
     const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
 
-    return () => selectedWords.join(randomSeparator) + numbers + symbol;
+    return () => {
+        return selectedWords.join(randomSeparator) + numbers + symbol;
+    };
 };
 
 const generateSecurePart = () => {
@@ -132,6 +132,8 @@ const generateSecurePart = () => {
         return securePassword;
     };
 };
+
+generateBtn.addEventListener('click', generatePassword);
 
 async function copyToClipboard() {
     try {
