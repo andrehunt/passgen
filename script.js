@@ -64,47 +64,67 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
-// Password generation
 function generatePassword() {
     let password = '';
-    if (passwordType.value === 'temporary') {
-        const numWords = parseInt(wordCount.value);
-        const selectedWords = [];
-        const wordArray = words; // Assuming words array is defined elsewhere
+    let finalPassword = '';
+    const numWords = parseInt(wordCount.value);
+    const symbols = '!@#$+';
+    const separators = ['-', '&', '$', '#', '=', '@'];
 
-        for (let i = 0; i < numWords; i++) {
-            let randomWord = wordArray[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * wordArray.length)];
-            randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
-            selectedWords.push(randomWord);
-        }
-
-        const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
-        const symbols = '!@#$+';
-        const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
-        const separators = ['-', '&', '$', '#', '=', '@'];
-        const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
-        password = selectedWords.join(randomSeparator) + numbers + symbol;
-    } else {
-        const length = parseInt(passwordLength.value);
-        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const numbers = '0123456789';
-        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-        
-        let chars = lowercase;
-        if (includeUppercase.checked) chars += uppercase;
-        if (includeNumbers.checked) chars += numbers;
-        if (includeSymbols.checked) chars += symbols;
-        
-        for (let i = 0; i < length; i++) {
-            password += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
-        }
+    // Update the generatedPassword field with animation
+    function animateField(field, values, finalValue, delay, iterations) {
+        let count = 0;
+        const interval = setInterval(() => {
+            if (count >= iterations) {
+                clearInterval(interval);
+                field.value = finalValue;
+                return;
+            }
+            field.value = values[Math.floor(Math.random() * values.length)];
+            count++;
+        }, delay);
     }
 
-    // Set the generated password to the input field
-    generatedPassword.value = password;
-    updateStrengthMeter(password);
+    // Animate each part of the password generation
+    function animatePasswordParts() {
+        // Words animation
+        const wordArray = words;
+        const selectedWords = [];
+        const wordValues = Array.from({ length: 10 }, () => wordArray[Math.floor(Math.random() * wordArray.length)]);
+        animateField(generatedPassword, wordValues, '', 30, 20);
+        setTimeout(() => {
+            for (let i = 0; i < numWords; i++) {
+                let randomWord = wordArray[Math.floor(Math.random() * wordArray.length)];
+                randomWord = randomWord.split('').map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)).join('');
+                selectedWords.push(randomWord);
+            }
+            finalPassword += selectedWords.join('-');
+            
+            // Numbers animation
+            const numberValues = Array.from({ length: 10 }, () => Math.floor(Math.random() * 900) + 100);
+            animateField(generatedPassword, numberValues.map(num => num.toString()), '', 30, 20);
+            setTimeout(() => {
+                const numbers = Math.floor(Math.random() * 900) + 100;
+                finalPassword += numbers;
+                
+                // Symbol animation
+                const symbolValues = Array.from({ length: 10 }, () => symbols.charAt(Math.floor(Math.random() * symbols.length)));
+                animateField(generatedPassword, symbolValues, '', 30, 20);
+                setTimeout(() => {
+                    const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+                    finalPassword += symbol;
+
+                    // Set the final password value
+                    generatedPassword.value = finalPassword;
+                    updateStrengthMeter(finalPassword);
+                }, 600); // Adjust delay for symbols animation
+            }, 600); // Adjust delay for numbers animation
+        }, 600); // Adjust delay for words animation
+    }
+
+    animatePasswordParts();
 }
+
 
 async function copyToClipboard() {
     try {
