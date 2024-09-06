@@ -67,15 +67,15 @@ const words = [
 async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
-    
+
     // Determine which part generator function to use
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
-    
+
     // Start the animation
     await animatePassword(partGenerator, animationDuration, maxIterations);
-    
+
     // Update the strength meter with the final password
-    const finalPassword = partGenerator();
+    const finalPassword = partGenerator(); // Generate final password after animation
     generatedPassword.value = finalPassword;
     updateStrengthMeter(finalPassword);
 }
