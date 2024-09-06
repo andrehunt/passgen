@@ -13,6 +13,7 @@ const generatedPassword = document.getElementById('generatedPassword');
 const copyBtn = document.getElementById('copyBtn');
 const strengthBar = document.getElementById('strengthBar');
 const invertBtn = document.getElementById('invertBtn');
+const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 
 // Initialize particles.js
 particlesJS('particles-js', {
@@ -101,7 +102,6 @@ invertBtn.addEventListener("click", function() {
     document.body.classList.toggle("inverted");
 });
 
-
 const words = [
     "apple", "beach", "book", "cloud", "coffee", "dog", "door", "house",
     "light", "moon", "mountain", "paper", "plant", "rain", "road", "sky",
@@ -147,6 +147,45 @@ const words = [
 ];
 
 
+
+function calculateTemporaryPossibilities() {
+    const numWords = parseInt(wordCount.value, 10);
+    const numDigits = 900; // 3-digit numbers (000-999)
+    const numSymbols = 1; // Assuming a single symbol
+
+    // Number of combinations
+    const numWordCombinations = Math.pow(words.length, numWords);
+    const numTotalCombinations = numWordCombinations * numDigits * numSymbols;
+
+    return numTotalCombinations;
+}
+
+function calculateSecurePossibilities() {
+    const length = parseInt(passwordLength.value, 10);
+    const chars = 'abcdefghijklmnopqrstuvwxyz' +
+        (includeUppercase.checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '') +
+        (includeNumbers.checked ? '0123456789' : '') +
+        (includeSymbols.checked ? '!@#$%^&*()_+[]{}|;:,.<>?`~' : '');
+
+    // Number of possible characters
+    const numChars = chars.length;
+
+    // Number of combinations
+    return Math.pow(numChars, length);
+}
+
+function updatePossibilitiesDisplay() {
+    let possibilities = 0;
+
+    if (passwordType.value === 'temporary') {
+        possibilities = calculateTemporaryPossibilities();
+    } else if (passwordType.value === 'secure') {
+        possibilities = calculateSecurePossibilities();
+    }
+
+    possibilitiesDisplay.textContent = `Number of possible passwords: ${possibilities.toLocaleString()}`;
+}
+
 async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
@@ -160,6 +199,7 @@ async function generatePassword() {
     const finalPassword = partGenerator();
     generatedPassword.value = finalPassword;
     updateStrengthMeter(finalPassword);
+    updatePossibilitiesDisplay();
 }
 
 function generateTemporaryPart() {
@@ -241,14 +281,22 @@ copyBtn.addEventListener('click', function() {
 passwordType.addEventListener('change', function() {
     temporaryOptions.style.display = passwordType.value === 'temporary' ? 'block' : 'none';
     secureOptions.style.display = passwordType.value === 'secure' ? 'block' : 'none';
+    updatePossibilitiesDisplay();
 });
 
 wordCount.addEventListener('input', function() {
     wordCountDisplay.textContent = `${wordCount.value} words`;
+    updatePossibilitiesDisplay();
 });
 
 passwordLength.addEventListener('input', function() {
     lengthDisplay.textContent = `${passwordLength.value} characters`;
+    updatePossibilitiesDisplay();
 });
 
+includeUppercase.addEventListener('change', updatePossibilitiesDisplay);
+includeNumbers.addEventListener('change', updatePossibilitiesDisplay);
+includeSymbols.addEventListener('change', updatePossibilitiesDisplay);
+
 passwordType.dispatchEvent(new Event('change'));
+
