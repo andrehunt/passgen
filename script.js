@@ -146,8 +146,6 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
-
-
 function calculateTemporaryPossibilities() {
     const numWords = parseInt(wordCount.value, 10);
     const numDigits = 900; // 3-digit numbers (000-999)
@@ -165,12 +163,9 @@ function calculateSecurePossibilities() {
     const chars = 'abcdefghijklmnopqrstuvwxyz' +
         (includeUppercase.checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '') +
         (includeNumbers.checked ? '0123456789' : '') +
-        (includeSymbols.checked ? '!@#$%^&*()_+[]{}|;:,.<>?`~' : '');
-
-    // Number of possible characters
+        (includeSymbols.checked ? '!@#$%^&*()-_=+[]{}|;:,.<>?/' : '');
     const numChars = chars.length;
 
-    // Number of combinations
     return Math.pow(numChars, length);
 }
 
@@ -183,120 +178,82 @@ function updatePossibilitiesDisplay() {
         possibilities = calculateSecurePossibilities();
     }
 
-    possibilitiesDisplay.textContent = `Number of possible passwords: ${possibilities.toLocaleString()}`;
+    possibilitiesDisplay.textContent = `Estimated possibilities: ${possibilities.toLocaleString()}`;
 }
 
-async function generatePassword() {
-    const animationDuration = 30; // ms
-    const maxIterations = 50;
+function generatePassword() {
+    let password = '';
+    let animationSteps = 0;
 
-    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
-
-    if (passwordType.value === 'secure') {
-        await animatePassword(partGenerator, animationDuration, maxIterations);
-    }
-
-    const finalPassword = partGenerator();
-    generatedPassword.value = finalPassword;
-    updateStrengthMeter(finalPassword);
-    updatePossibilitiesDisplay();
-}
-
-function generateTemporaryPart() {
-    return () => {
-        const wordCountValue = parseInt(wordCount.value, 10);
-        let password = '';
-        for (let i = 0; i < wordCountValue; i++) {
-            const randomWord = words[Math.floor(Math.random() * words.length)];
-            password += (i > 0 ? '-' : '') + randomWord;
+    if (passwordType.value === 'temporary') {
+        // Animation for temporary passwords
+        const numWords = parseInt(wordCount.value, 10);
+        for (let i = 0; i < numWords; i++) {
+            password += words[Math.floor(Math.random() * words.length)] + ' ';
         }
-        password += Math.floor(Math.random() * 900) + 100; // Add 3 random digits
-        password += '!'; // Add a symbol
-        return password;
-    };
-}
+        const numDigits = 3;
+        const numSymbols = 1;
+        for (let i = 0; i < numDigits; i++) {
+            password += Math.floor(Math.random() * 10);
+        }
+        password += '!';
 
-function generateSecurePart() {
-    return () => {
+    } else if (passwordType.value === 'secure') {
+        // Animation for secure passwords
         const length = parseInt(passwordLength.value, 10);
         const chars = 'abcdefghijklmnopqrstuvwxyz' +
             (includeUppercase.checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '') +
             (includeNumbers.checked ? '0123456789' : '') +
-            (includeSymbols.checked ? '!@#$%^&*()_+[]{}|;:,.<>?`~' : '');
+            (includeSymbols.checked ? '!@#$%^&*()-_=+[]{}|;:,.<>?/' : '');
+        const numChars = chars.length;
 
-        let password = '';
         for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * chars.length);
-            password += chars[randomIndex];
+            animationSteps++;
+            password += chars.charAt(Math.floor(Math.random() * numChars));
         }
-        return password;
-    };
-}
-
-async function animatePassword(partGenerator, duration, maxIterations) {
-    const originalPassword = generatedPassword.value;
-
-    for (let i = 0; i < maxIterations; i++) {
-        setTimeout(() => {
-            generatedPassword.value = partGenerator();
-        }, i * duration);
     }
 
-    return new Promise(resolve => {
-        setTimeout(() => {
-            generatedPassword.value = partGenerator();
-            resolve();
-        }, maxIterations * duration);
+    generatedPassword.textContent = password;
+
+    // Simulate animation
+    if (passwordType.value === 'secure') {
+        const animationInterval = setInterval(() => {
+            if (animationSteps <= 0) {
+                clearInterval(animationInterval);
+            } else {
+                let tempPassword = '';
+                for (let i = 0; i < length; i++) {
+                    tempPassword += chars.charAt(Math.floor(Math.random() * numChars));
+                }
+                generatedPassword.textContent = tempPassword;
+                animationSteps--;
+            }
+        }, 30);
+    }
+
+    updatePossibilitiesDisplay();
+}
+
+function copyToClipboard() {
+    const text = generatedPassword.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Password copied to clipboard!');
     });
 }
 
-function updateStrengthMeter(password) {
-    // Simple strength calculation for demonstration
-    let strength = 0;
-    if (password.length >= 8) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/\d/.test(password)) strength += 25;
-    if (/[@$!%*?&]/.test(password)) strength += 25;
-    strengthBar.style.width = `${strength}%`;
-
-    // Optional: change color based on strength
-    if (strength <= 25) {
-        strengthBar.classList.add('bg-red-600');
-        strengthBar.classList.remove('bg-yellow-600', 'bg-green-600');
-    } else if (strength <= 50) {
-        strengthBar.classList.add('bg-yellow-600');
-        strengthBar.classList.remove('bg-red-600', 'bg-green-600');
-    } else {
-        strengthBar.classList.add('bg-green-600');
-        strengthBar.classList.remove('bg-red-600', 'bg-yellow-600');
+passwordType.addEventListener('change', function() {
+    if (passwordType.value === 'temporary') {
+        temporaryOptions.style.display = 'block';
+        secureOptions.style.display = 'none';
+    } else if (passwordType.value === 'secure') {
+        temporaryOptions.style.display = 'none';
+        secureOptions.style.display = 'block';
     }
-}
+    updatePossibilitiesDisplay();
+});
 
 generateBtn.addEventListener('click', generatePassword);
+copyBtn.addEventListener('click', copyToClipboard);
 
-copyBtn.addEventListener('click', function() {
-    navigator.clipboard.writeText(generatedPassword.value);
-});
-
-passwordType.addEventListener('change', function() {
-    temporaryOptions.style.display = passwordType.value === 'temporary' ? 'block' : 'none';
-    secureOptions.style.display = passwordType.value === 'secure' ? 'block' : 'none';
-    updatePossibilitiesDisplay();
-});
-
-wordCount.addEventListener('input', function() {
-    wordCountDisplay.textContent = `${wordCount.value} words`;
-    updatePossibilitiesDisplay();
-});
-
-passwordLength.addEventListener('input', function() {
-    lengthDisplay.textContent = `${passwordLength.value} characters`;
-    updatePossibilitiesDisplay();
-});
-
-includeUppercase.addEventListener('change', updatePossibilitiesDisplay);
-includeNumbers.addEventListener('change', updatePossibilitiesDisplay);
-includeSymbols.addEventListener('change', updatePossibilitiesDisplay);
-
+// Initialize UI
 passwordType.dispatchEvent(new Event('change'));
-
