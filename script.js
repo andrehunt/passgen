@@ -69,15 +69,16 @@ async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
     
-    const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
+    // Choose generator based on password type
+    const generator = passwordType.value === 'temporary' ? generateTemporaryPart : generateSecurePart;
     
     let finalPassword = '';
     
-    const animatePart = (generator) => {
+    const animatePart = (generatorFunction) => {
         return new Promise((resolve) => {
             let iteration = 0;
             const interval = setInterval(() => {
-                finalPassword = generator();
+                finalPassword = generatorFunction();
                 generatedPassword.value = finalPassword;
                 if (++iteration >= maxIterations) {
                     clearInterval(interval);
@@ -88,7 +89,7 @@ async function generatePassword() {
     };
     
     // Start animation
-    await animatePart(partGenerator);
+    await animatePart(generator());
     updateStrengthMeter(finalPassword);
 }
 
