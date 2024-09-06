@@ -68,24 +68,23 @@ const words = [
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
-        // Temporary password generation logic
         const numWords = parseInt(wordCount.value);
         const selectedWords = [];
+        const wordArray = words; // Assuming words array is defined elsewhere
 
         for (let i = 0; i < numWords; i++) {
-            let randomWord = words[Math.floor(Math.random() * words.length)];
-            randomWord = randomWord.split('').map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)).join('');
+            let randomWord = wordArray[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * wordArray.length)];
+            randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
             selectedWords.push(randomWord);
         }
 
-        const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
+        const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
         const symbols = '!@#$+';
-        const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+        const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
         const separators = ['-', '&', '$', '#', '=', '@'];
-        const randomSeparator = separators[Math.floor(Math.random() * separators.length)];
+        const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
         password = selectedWords.join(randomSeparator) + numbers + symbol;
     } else {
-        // Complex password generation logic
         const length = parseInt(passwordLength.value);
         const lowercase = 'abcdefghijklmnopqrstuvwxyz';
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -98,21 +97,24 @@ function generatePassword() {
         if (includeSymbols.checked) chars += symbols;
         
         for (let i = 0; i < length; i++) {
-            password += chars.charAt(Math.floor(Math.random() * chars.length));
+            password += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
         }
     }
 
-    // Prevent password reuse
-    while (previousPasswords.includes(password)) {
-        password = generatePassword(); // Regenerate password if it's a duplicate
-    }
-
-    previousPasswords.push(password);
-    if (previousPasswords.length > 5) previousPasswords.shift(); // Limit stored passwords
-
+    // Set the generated password to the input field
     generatedPassword.value = password;
     updateStrengthMeter(password);
 }
+
+async function copyToClipboard() {
+    try {
+        await navigator.clipboard.writeText(generatedPassword.value);
+        alert('Password copied to clipboard!');
+    } catch (err) {
+        console.error('Failed to copy password: ', err);
+    }
+}
+
 
 // Password strength meter update
 function updateStrengthMeter(password) {
