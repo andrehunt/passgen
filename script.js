@@ -108,6 +108,7 @@ const generateTemporaryPart = () => {
     const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
 
     return () => {
+        // Ensure generator function returns a new password each time
         return selectedWords.join(randomSeparator) + numbers + symbol;
     };
 };
@@ -132,6 +133,7 @@ const generateSecurePart = () => {
         return securePassword;
     };
 };
+
 
 generateBtn.addEventListener('click', generatePassword);
 
