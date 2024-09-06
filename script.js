@@ -64,23 +64,7 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
-// Password reuse prevention (store last 5 passwords)
-let previousPasswords = [];
-
-// Password generation with animation
-function generatePasswordWithAnimation() {
-    let attempts = 0;
-    const maxAttempts = 32;
-    const interval = setInterval(() => {
-        generatePassword(); // Generate password
-        attempts++;
-        if (attempts >= maxAttempts) {
-            clearInterval(interval);  // Stop the animation
-        }
-    }, 30);  // Generates a new password every 30ms
-}
-
-// Password generation with reuse prevention
+// Password generation
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
@@ -110,7 +94,7 @@ function generatePassword() {
         
         let chars = lowercase;
         if (includeUppercase.checked) chars += uppercase;
-        if (includeNumbers.checked) chars += numbers + '123456789';
+        if (includeNumbers.checked) chars += numbers;
         if (includeSymbols.checked) chars += symbols;
         
         for (let i = 0; i < length; i++) {
@@ -151,7 +135,7 @@ function calculatePasswordStrength(password) {
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++; // Mixed case
     if (password.length >= 16) strength++; // Longer password
 
-    return Math.min(strength, 8); // Cap strength at 4
+    return Math.min(strength, 8); // Cap strength at 8
 }
 
 // Clipboard copy function
@@ -159,21 +143,6 @@ function copyToClipboard() {
     generatedPassword.select();
     document.execCommand('copy');
 }
-
-// Password encryption function
-function encryptPassword(password) {
-    const encryptedPassword = CryptoJS.AES.encrypt(password, 'your-secret-key').toString();
-    return encryptedPassword;
-}
-
-// Audit log for password usage
-let auditLog = [];
-function logPasswordUsage(password) {
-    const timestamp = new Date().toLocaleString();
-    auditLog.push({ password, timestamp });
-    console.log("Audit Log:", auditLog);  // Can store or display the audit log
-}
-
 
 // Event listeners
 passwordType.addEventListener('change', () => {
@@ -194,7 +163,7 @@ passwordLength.addEventListener('input', () => {
     lengthDisplay.textContent = `${passwordLength.value} characters`;
 });
 
-generateBtn.addEventListener('click', generatePasswordWithRateLimit); // Rate limit applied
+generateBtn.addEventListener('click', generatePassword);
 copyBtn.addEventListener('click', copyToClipboard);
 
 // Initialize particles.js
