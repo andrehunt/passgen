@@ -64,6 +64,7 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
+
 async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
@@ -71,8 +72,10 @@ async function generatePassword() {
     // Determine which part generator function to use
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
 
-    // Start the animation
-    await animatePassword(partGenerator, animationDuration, maxIterations);
+    if (passwordType.value === 'secure') {
+        // Start the animation
+        await animatePassword(partGenerator, animationDuration, maxIterations);
+    }
 
     // Update the strength meter with the final password
     const finalPassword = partGenerator(); // Generate final password after animation
@@ -148,7 +151,7 @@ async function copyToClipboard() {
 
 function updateStrengthMeter(password) {
     const strength = calculatePasswordStrength(password);
-    const percentage = (strength / 4) * 100;
+    const percentage = (strength / 8) * 100;
     strengthBar.style.width = `${percentage}%`;
     strengthBar.style.backgroundColor = 'red';
     strengthBar.textContent = ''; // No text in the bar
