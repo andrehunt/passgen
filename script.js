@@ -12,10 +12,9 @@ const generateBtn = document.getElementById('generateBtn');
 const generatedPassword = document.getElementById('generatedPassword');
 const copyBtn = document.getElementById('copyBtn');
 const strengthBar = document.getElementById('strengthBar');
-
 const invertBtn = document.getElementById('invertBtn');
 
-
+// Color inversion button
 document.getElementById("invertBtn").addEventListener("click", function() {
     document.body.classList.toggle("inverted");
 });
@@ -65,11 +64,15 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
+// Password reuse prevention (store last 5 passwords)
+let previousPasswords = [];
+
+// Password generation with animation (10x rapidly)
 function generatePasswordWithAnimation() {
     let attempts = 0;
     const maxAttempts = 10;
     const interval = setInterval(() => {
-        generatePassword();
+        generatePassword(); // Generate password
         attempts++;
         if (attempts >= maxAttempts) {
             clearInterval(interval);  // Stop the animation
@@ -77,40 +80,28 @@ function generatePasswordWithAnimation() {
     }, 100);  // Generates a new password every 100ms
 }
 
-
+// Password generation with reuse prevention
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
-        // Get the number of words from the slider
+        // Temporary password generation logic
         const numWords = parseInt(wordCount.value);
         const selectedWords = [];
 
         for (let i = 0; i < numWords; i++) {
             let randomWord = words[Math.floor(Math.random() * words.length)];
-
-            // Less frequent capitalization (20% chance for each letter to be capitalized)
-            randomWord = randomWord
-                .split('')
-                .map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)) // 20% chance
-                .join('');
-
+            randomWord = randomWord.split('').map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)).join('');
             selectedWords.push(randomWord);
         }
 
         const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
         const symbols = '!@#$+';
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-
-        // Possible word separators
         const separators = ['-', '&', '$', '#', '=', '@'];
-
-        // Randomly choose a separator for joining words
         const randomSeparator = separators[Math.floor(Math.random() * separators.length)];
-
-        // Join words with a random separator
         password = selectedWords.join(randomSeparator) + numbers + symbol;
     } else {
-        // Generate a complex password (unchanged)
+        // Complex password generation logic
         const length = parseInt(passwordLength.value);
         const lowercase = 'abcdefghijklmnopqrstuvwxyz';
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -126,14 +117,20 @@ function generatePassword() {
             password += chars.charAt(Math.floor(Math.random() * chars.length));
         }
     }
+
+    // Prevent password reuse
+    while (previousPasswords.includes(password)) {
+        password = generatePassword(); // Regenerate password if it's a duplicate
+    }
+
+    previousPasswords.push(password);
+    if (previousPasswords.length > 5) previousPasswords.shift(); // Limit stored passwords
+
     generatedPassword.value = password;
     updateStrengthMeter(password);
 }
 
-
-
-
-
+// Password strength meter update
 function updateStrengthMeter(password) {
     const strength = calculatePasswordStrength(password);
     const percentage = (strength / 4) * 100;
@@ -142,6 +139,7 @@ function updateStrengthMeter(password) {
     strengthBar.textContent = ''; // No text in the bar
 }
 
+// Password strength calculation
 function calculatePasswordStrength(password) {
     let strength = 0;
     if (password.length >= 8) strength++;
@@ -149,8 +147,6 @@ function calculatePasswordStrength(password) {
     if (/[A-Z]/.test(password)) strength++;
     if (/[0-9]/.test(password)) strength++;
     if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
-
-    // Additional complexity checks
     if (/[\W_]/.test(password)) strength++; // Non-alphanumeric characters
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++; // Mixed case
     if (password.length >= 16) strength++; // Longer password
@@ -158,11 +154,39 @@ function calculatePasswordStrength(password) {
     return Math.min(strength, 4); // Cap strength at 4
 }
 
+// Clipboard copy function
 function copyToClipboard() {
     generatedPassword.select();
     document.execCommand('copy');
 }
 
+// Password encryption function
+function encryptPassword(password) {
+    const encryptedPassword = CryptoJS.AES.encrypt(password, 'your-secret-key').toString();
+    return encryptedPassword;
+}
+
+// Audit log for password usage
+let auditLog = [];
+function logPasswordUsage(password) {
+    const timestamp = new Date().toLocaleString();
+    auditLog.push({ password, timestamp });
+    console.log("Audit Log:", auditLog);  // Can store or display the audit log
+}
+
+// Rate limit for password generation
+let lastGenerated = Date.now();
+function generatePasswordWithRateLimit() {
+    const now = Date.now();
+    if (now - lastGenerated < 5000) {  // 5-second rate limit
+        alert("Please wait before generating another password.");
+        return;
+    }
+    generatePasswordWithAnimation();  // Animation with rate limit
+    lastGenerated = now;
+}
+
+// Event listeners
 passwordType.addEventListener('change', () => {
     if (passwordType.value === 'temporary') {
         temporaryOptions.classList.remove('hidden');
@@ -181,7 +205,7 @@ passwordLength.addEventListener('input', () => {
     lengthDisplay.textContent = `${passwordLength.value} characters`;
 });
 
-generateBtn.addEventListener('click', generatePassword);
+generateBtn.addEventListener('click', generatePasswordWithRateLimit); // Rate limit applied
 copyBtn.addEventListener('click', copyToClipboard);
 
 // Initialize particles.js
