@@ -90,7 +90,7 @@ function generatePassword() {
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
 
         // Join words with a dash
-        password = selectedWords.join('-') + numbers + symbol;
+        password = selectedWords.join('-', '&', '$', '#', '=', '@') + numbers + symbol;
     } else {
         // Generate a complex password (unchanged)
         const length = parseInt(passwordLength.value);
