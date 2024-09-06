@@ -79,7 +79,7 @@ function generatePassword() {
             // Less frequent capitalization (20% chance for each letter to be capitalized)
             randomWord = randomWord
                 .split('')
-                .map(char => (Math.random() > 0.8 ? char.toUpperCase() : char)) // 20% chance
+                .map(char => (Math.random() > 0.4 ? char.toUpperCase() : char))
                 .join('');
 
             selectedWords.push(randomWord);
