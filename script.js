@@ -67,17 +67,17 @@ const words = [
 // Password reuse prevention (store last 5 passwords)
 let previousPasswords = [];
 
-// Password generation with animation (10x rapidly)
+// Password generation with animation
 function generatePasswordWithAnimation() {
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 32;
     const interval = setInterval(() => {
         generatePassword(); // Generate password
         attempts++;
         if (attempts >= maxAttempts) {
             clearInterval(interval);  // Stop the animation
         }
-    }, 100);  // Generates a new password every 100ms
+    }, 30);  // Generates a new password every 30ms
 }
 
 // Password generation with reuse prevention
@@ -151,7 +151,7 @@ function calculatePasswordStrength(password) {
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++; // Mixed case
     if (password.length >= 16) strength++; // Longer password
 
-    return Math.min(strength, 4); // Cap strength at 4
+    return Math.min(strength, 8); // Cap strength at 4
 }
 
 // Clipboard copy function
@@ -174,17 +174,6 @@ function logPasswordUsage(password) {
     console.log("Audit Log:", auditLog);  // Can store or display the audit log
 }
 
-// Rate limit for password generation
-let lastGenerated = Date.now();
-function generatePasswordWithRateLimit() {
-    const now = Date.now();
-    if (now - lastGenerated < 5000) {  // 5-second rate limit
-        alert("Please wait before generating another password.");
-        return;
-    }
-    generatePasswordWithAnimation();  // Animation with rate limit
-    lastGenerated = now;
-}
 
 // Event listeners
 passwordType.addEventListener('change', () => {
