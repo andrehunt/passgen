@@ -29,6 +29,9 @@
             color: #ffffff;
             font-size: 14px;
         }
+        .inverted {
+            filter: invert(1) hue-rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-black flex items-center justify-center min-h-screen">
@@ -58,8 +61,7 @@ Y                  Y                                            Y
             </div>
         </div>
 
-        
-        <!-- Form and other content goes here -->
+        <!-- Form and other content -->
         <div class="mb-4">
             <label class="block text-white text-sm font-bold mb-2" for="passwordType">
                 Password Type
@@ -123,7 +125,5 @@ Y                  Y                                            Y
     </div>
     <script src="script.js"></script>
 </body>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
 </html>
