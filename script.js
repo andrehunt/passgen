@@ -66,23 +66,33 @@ const words = [
 ];
 
 
-
 function generatePassword() {
     let password = '';
     if (passwordType.value === 'temporary') {
         // Get the number of words from the slider
         const numWords = parseInt(wordCount.value);
         const selectedWords = [];
+
         for (let i = 0; i < numWords; i++) {
-            const randomWord = words[Math.floor(Math.random() * words.length)];
-            selectedWords.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
+            let randomWord = words[Math.floor(Math.random() * words.length)];
+
+            // Randomly capitalize some letters
+            randomWord = randomWord
+                .split('')
+                .map(char => (Math.random() > 0.5 ? char.toUpperCase() : char))
+                .join('');
+
+            selectedWords.push(randomWord);
         }
+
         const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
         const symbols = '!@#$+';
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-        password = selectedWords.join('') + numbers + symbol;
+        
+        // Join words with a dash
+        password = selectedWords.join('-') + numbers + symbol;
     } else {
-        // Generate a complex password
+        // Generate a complex password (unchanged)
         const length = parseInt(passwordLength.value);
         const lowercase = 'abcdefghijklmnopqrstuvwxyz';
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
