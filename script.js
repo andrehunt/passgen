@@ -76,10 +76,10 @@ function generatePassword() {
         for (let i = 0; i < numWords; i++) {
             let randomWord = words[Math.floor(Math.random() * words.length)];
 
-            // Randomly capitalize some letters
+            // Less frequent capitalization (20% chance for each letter to be capitalized)
             randomWord = randomWord
                 .split('')
-                .map(char => (Math.random() > 0.5 ? char.toUpperCase() : char))
+                .map(char => (Math.random() > 0.8 ? char.toUpperCase() : char)) // 20% chance
                 .join('');
 
             selectedWords.push(randomWord);
@@ -88,7 +88,7 @@ function generatePassword() {
         const numbers = Math.floor(Math.random() * 900) + 100; // Three random numbers
         const symbols = '!@#$+';
         const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
-        
+
         // Join words with a dash
         password = selectedWords.join('-') + numbers + symbol;
     } else {
@@ -111,6 +111,7 @@ function generatePassword() {
     generatedPassword.value = password;
     updateStrengthMeter(password);
 }
+
 
 
 
