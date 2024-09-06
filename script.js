@@ -64,18 +64,20 @@ const words = [
     "wheelbarrow", "wig", "yogurt"
 ];
 
-// Password generation
 async function generatePassword() {
     const animationDuration = 30; // ms
     const maxIterations = 50;
+    
+    // This will hold the final password result
     let finalPassword = '';
 
-    const animatePart = (partGenerator) => {
+    // Function to run the animation
+    const animatePart = async (partGenerator) => {
         return new Promise((resolve) => {
             let iteration = 0;
             const interval = setInterval(() => {
-                finalPassword = partGenerator();
-                generatedPassword.value = finalPassword;
+                finalPassword = partGenerator(); // Update the final password
+                generatedPassword.value = finalPassword; // Show the animated password
                 if (++iteration >= maxIterations) {
                     clearInterval(interval);
                     resolve();
@@ -84,21 +86,22 @@ async function generatePassword() {
         });
     };
 
+    // Define password parts
     const generateTemporaryPart = () => {
         const numWords = parseInt(wordCount.value);
         const selectedWords = [];
 
         for (let i = 0; i < numWords; i++) {
-            let randomWord = words[Math.floor(Math.random() * words.length)];
-            randomWord = randomWord.split('').map(char => (Math.random() > 0.95 ? char.toUpperCase() : char)).join('');
+            let randomWord = words[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * words.length)];
+            randomWord = randomWord.split('').map(char => (crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) > 0.95 ? char.toUpperCase() : char)).join('');
             selectedWords.push(randomWord);
         }
 
-        const numbers = Math.floor(Math.random() * 900) + 100;
+        const numbers = Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * 900) + 100;
         const symbols = '!@#$+';
-        const symbol = symbols.charAt(Math.floor(Math.random() * symbols.length));
+        const symbol = symbols.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * symbols.length));
         const separators = ['-', '&', '$', '#', '=', '@'];
-        const randomSeparator = separators[Math.floor(Math.random() * separators.length)];
+        const randomSeparator = separators[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * separators.length)];
 
         return () => selectedWords.join(randomSeparator) + numbers + symbol;
     };
@@ -118,16 +121,21 @@ async function generatePassword() {
         return () => {
             let securePassword = '';
             for (let i = 0; i < length; i++) {
-                securePassword += chars.charAt(Math.floor(Math.random() * chars.length));
+                securePassword += chars.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xFFFFFFFF + 1) * chars.length));
             }
             return securePassword;
         };
     };
 
+    // Select the appropriate part generator
     const partGenerator = passwordType.value === 'temporary' ? generateTemporaryPart() : generateSecurePart();
 
-    // Animate each part of the password generation
+    // Run the animation
     await animatePart(partGenerator);
+    
+    // Finalize the password and update the strength meter
+    finalPassword = partGenerator();
+    generatedPassword.value = finalPassword;
     updateStrengthMeter(finalPassword);
 }
 
