@@ -19,59 +19,55 @@ const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 40,
+            "value": 100, // Increased number of particles
             "density": {
                 "enable": true,
-                "value_area": 400
+                "value_area": 800
             }
         },
         "color": {
-            "value": "#ff0000" // Red color
+            "value": "#ff4500" // Fire-like color (orange-red)
         },
         "shape": {
-            "type": "edge",
+            "type": "circle",
             "stroke": {
                 "width": 0,
                 "color": "#000000"
             }
         },
         "opacity": {
-            "value": 2.99, // Increased opacity for a more pronounced glow
+            "value": 0.8, // Increased opacity for a more glowing effect
             "random": true,
             "anim": {
-                "enable": true,
-                "speed": 0.5,
+                "enable": false,
+                "speed": 1,
                 "opacity_min": 0.3,
-                "sync": true
+                "sync": false
             }
         },
         "size": {
-            "value": 2, // Increased size for a more noticeable glow
+            "value": 5, // Larger size for more noticeable particles
             "random": true,
             "anim": {
-                "enable": true,
+                "enable": false,
                 "speed": 20,
                 "size_min": 1,
-                "sync": true
+                "sync": false
             }
         },
         "line_linked": {
-            "enable": false, // Enable lines between particles to enhance the glow effect
-            "distance": 150,
-            "color": "#ff0000", // Match the color of the particles
-            "opacity": 0.2,
-            "width": 1
+            "enable": false, // Disable lines between particles
         },
         "move": {
             "enable": true,
-            "speed": 2,
+            "speed": 4, // Adjusted speed for a smoother effect
             "direction": "none",
-            "random": true,
+            "random": true, // Random movement for a fire-like effect
             "straight": false,
             "out_mode": "out",
             "bounce": false,
             "attract": {
-                "enable": true,
+                "enable": false,
                 "rotateX": 600,
                 "rotateY": 1200
             }
@@ -81,8 +77,8 @@ particlesJS('particles-js', {
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": true,
-                "mode": "repulse"
+                "enable": true, // Enable interaction on hover
+                "mode": "repulse" // Repulse effect to move particles away from the cursor
             },
             "onclick": {
                 "enable": false,
@@ -93,6 +89,7 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+
 
 
 // Toggle between simple and secure password options
