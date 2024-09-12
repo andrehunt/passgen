@@ -16,6 +16,7 @@ const invertBtn = document.getElementById('invertBtn');
 const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 
 // Initialize particles.js
+// Initialize particles.js
 particlesJS('particles-js', {
     "particles": {
         "number": {
@@ -26,7 +27,7 @@ particlesJS('particles-js', {
             }
         },
         "color": {
-            "value": "#ffffff"
+            "value": "#ff0000" // Red color
         },
         "shape": {
             "type": "circle",
