@@ -161,11 +161,11 @@ const words = [
     "spray", "sponge", "tent", "thread", "towel", "tube", "twig", "vine",
     "wheelbarrow", "wig", "yogurt"
 ];
-// Function to randomly capitalize characters (with 10% chance)
+// Function to randomly capitalize characters (with 20% chance)
 function capitalizeWithChance(word) {
     return word
         .split('')
-        .map(char => (Math.random() < 0.15 ? char.toUpperCase() : char))
+        .map(char => (Math.random() < 0.20 ? char.toUpperCase() : char))
         .join('');
 }
 
