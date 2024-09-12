@@ -19,44 +19,44 @@ const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 80,
+            "value": 40,
             "density": {
                 "enable": true,
-                "value_area": 800
+                "value_area": 400
             }
         },
         "color": {
             "value": "#ff0000" // Red color
         },
         "shape": {
-            "type": "circle",
+            "type": "edge",
             "stroke": {
                 "width": 0,
                 "color": "#000000"
             }
         },
         "opacity": {
-            "value": 0.8, // Increased opacity for a more pronounced glow
+            "value": 2.99, // Increased opacity for a more pronounced glow
             "random": true,
             "anim": {
-                "enable": false,
-                "speed": 1,
+                "enable": true,
+                "speed": 0.5,
                 "opacity_min": 0.3,
-                "sync": false
+                "sync": true
             }
         },
         "size": {
-            "value": 5, // Increased size for a more noticeable glow
+            "value": 2, // Increased size for a more noticeable glow
             "random": true,
             "anim": {
-                "enable": false,
-                "speed": 40,
+                "enable": true,
+                "speed": 20,
                 "size_min": 1,
-                "sync": false
+                "sync": true
             }
         },
         "line_linked": {
-            "enable": true, // Enable lines between particles to enhance the glow effect
+            "enable": false, // Enable lines between particles to enhance the glow effect
             "distance": 150,
             "color": "#ff0000", // Match the color of the particles
             "opacity": 0.2,
@@ -64,14 +64,14 @@ particlesJS('particles-js', {
         },
         "move": {
             "enable": true,
-            "speed": 6,
+            "speed": 2,
             "direction": "none",
-            "random": false,
+            "random": true,
             "straight": false,
             "out_mode": "out",
             "bounce": false,
             "attract": {
-                "enable": false,
+                "enable": true,
                 "rotateX": 600,
                 "rotateY": 1200
             }
@@ -81,7 +81,7 @@ particlesJS('particles-js', {
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": false,
+                "enable": true,
                 "mode": "repulse"
             },
             "onclick": {
