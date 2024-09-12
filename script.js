@@ -15,11 +15,10 @@ const strengthBar = document.getElementById('strengthBar');
 const invertBtn = document.getElementById('invertBtn');
 const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 
-// Initialize particles.js
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 100, // Increased number of particles
+            "value": 150, // Increase the number of particles for a denser effect
             "density": {
                 "enable": true,
                 "value_area": 800
@@ -32,37 +31,37 @@ particlesJS('particles-js', {
             "type": "circle",
             "stroke": {
                 "width": 0,
-                "color": "#000000"
+                "color": "#ff4500"
             }
         },
         "opacity": {
-            "value": 0.8, // Increased opacity for a more glowing effect
+            "value": 0.7, // Slightly reduced opacity for a glowing effect
             "random": true,
             "anim": {
-                "enable": false,
-                "speed": 1,
-                "opacity_min": 0.3,
+                "enable": true,
+                "speed": 1.5,
+                "opacity_min": 0.2,
                 "sync": false
             }
         },
         "size": {
-            "value": 5, // Larger size for more noticeable particles
+            "value": 3, // Smaller size for more refined particles
             "random": true,
             "anim": {
-                "enable": false,
-                "speed": 20,
+                "enable": true,
+                "speed": 4,
                 "size_min": 1,
                 "sync": false
             }
         },
         "line_linked": {
-            "enable": false, // Disable lines between particles
+            "enable": false // Disable lines between particles
         },
         "move": {
             "enable": true,
-            "speed": 4, // Adjusted speed for a smoother effect
+            "speed": 2, // Slower speed for a smoother effect
             "direction": "none",
-            "random": true, // Random movement for a fire-like effect
+            "random": true,
             "straight": false,
             "out_mode": "out",
             "bounce": false,
@@ -77,18 +76,19 @@ particlesJS('particles-js', {
         "detect_on": "canvas",
         "events": {
             "onhover": {
-                "enable": true, // Enable interaction on hover
-                "mode": "repulse" // Repulse effect to move particles away from the cursor
+                "enable": true,
+                "mode": "repulse" // Particles repulse from the mouse
             },
             "onclick": {
-                "enable": false,
-                "mode": "push"
+                "enable": true,
+                "mode": "push" // More particles are added on click
             },
             "resize": true
         }
     },
     "retina_detect": true
 });
+
 
 
 
