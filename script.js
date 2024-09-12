@@ -16,7 +16,6 @@ const invertBtn = document.getElementById('invertBtn');
 const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 
 // Initialize particles.js
-// Initialize particles.js
 particlesJS('particles-js', {
     "particles": {
         "number": {
@@ -34,36 +33,33 @@ particlesJS('particles-js', {
             "stroke": {
                 "width": 0,
                 "color": "#000000"
-            },
-            "polygon": {
-                "nb_sides": 5
             }
         },
         "opacity": {
-            "value": 0.5,
+            "value": 0.8, // Increased opacity for a more pronounced glow
             "random": true,
             "anim": {
                 "enable": false,
                 "speed": 1,
-                "opacity_min": 0.1,
+                "opacity_min": 0.3,
                 "sync": false
             }
         },
         "size": {
-            "value": 3,
+            "value": 5, // Increased size for a more noticeable glow
             "random": true,
             "anim": {
                 "enable": false,
                 "speed": 40,
-                "size_min": 0.1,
+                "size_min": 1,
                 "sync": false
             }
         },
         "line_linked": {
-            "enable": false,
+            "enable": true, // Enable lines between particles to enhance the glow effect
             "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
+            "color": "#ff0000", // Match the color of the particles
+            "opacity": 0.2,
             "width": 1
         },
         "move": {
@@ -97,6 +93,7 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+
 
 // Toggle between simple and secure password options
 passwordType.addEventListener('change', () => {
