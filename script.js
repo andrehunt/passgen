@@ -161,8 +161,13 @@ const words = [
     "spray", "sponge", "tent", "thread", "towel", "tube", "twig", "vine",
     "wheelbarrow", "wig", "yogurt"
 ];
-
-
+// Function to randomly capitalize characters (with 10% chance)
+function capitalizeWithChance(word) {
+    return word
+        .split('')
+        .map(char => (Math.random() < 0.1 ? char.toUpperCase() : char))
+        .join('');
+}
 
 // Generate password
 async function generatePassword() {
@@ -170,16 +175,22 @@ async function generatePassword() {
     
     if (passwordType.value === 'temporary') {
         const numWords = parseInt(wordCount.value, 10);
-        const randomWords = Array.from({ length: numWords }, () => words[Math.floor(Math.random() * words.length)]).join("");
-        const randomNumbers = Math.floor(100 + Math.random() * 900);
-        const randomSymbol = "!@#$%^&*()".charAt(Math.floor(Math.random() * 10));
-        password = `${randomWords}${randomNumbers}${randomSymbol}`;
+        // Capitalize words randomly and add a breaker between words
+        const randomWords = Array.from({ length: numWords }, () => 
+            capitalizeWithChance(words[Math.floor(Math.random() * words.length)])
+        ).join("-");
+        const randomNumbers = Math.floor(100 + Math.random() * 900); // 3 random digits
+        const randomSymbol = "!@#$%^&*()".charAt(Math.floor(Math.random() * 10)); // Random symbol
+        
+        // Format password with a breaker between words and numbers/symbols
+        password = `${randomWords}-${randomNumbers}${randomSymbol}`;
     } else {
         const length = parseInt(passwordLength.value, 10);
         const chars = 'abcdefghijklmnopqrstuvwxyz' +
             (includeUppercase.checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '') +
             (includeNumbers.checked ? '0123456789' : '') +
             (includeSymbols.checked ? '!@#$%^&*()_+[]{}|;:,.<>?`~' : '');
+        
         for (let i = 0; i < length; i++) {
             password += chars.charAt(Math.floor(Math.random() * chars.length));
         }
