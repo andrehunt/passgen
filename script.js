@@ -165,7 +165,7 @@ const words = [
 function capitalizeWithChance(word) {
     return word
         .split('')
-        .map(char => (Math.random() < 0.1 ? char.toUpperCase() : char))
+        .map(char => (Math.random() < 0.15 ? char.toUpperCase() : char))
         .join('');
 }
 
