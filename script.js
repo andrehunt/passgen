@@ -18,7 +18,7 @@ const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 100, // Increased number of particles
+            "value": 100, // Adjust based on your preference
             "density": {
                 "enable": true,
                 "value_area": 800
@@ -35,7 +35,7 @@ particlesJS('particles-js', {
             }
         },
         "opacity": {
-            "value": 0.8, // Increased opacity for a more glowing effect
+            "value": 0.8, // Adjust opacity for a glowing effect
             "random": true,
             "anim": {
                 "enable": false,
@@ -45,7 +45,7 @@ particlesJS('particles-js', {
             }
         },
         "size": {
-            "value": 5, // Larger size for more noticeable particles
+            "value": 5, // Adjust size for visibility
             "random": true,
             "anim": {
                 "enable": false,
@@ -59,7 +59,7 @@ particlesJS('particles-js', {
         },
         "move": {
             "enable": true,
-            "speed": 4, // Adjusted speed for a smoother effect
+            "speed": 4, // Adjust speed for smooth movement
             "direction": "none",
             "random": true, // Random movement for a fire-like effect
             "straight": false,
@@ -88,6 +88,7 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+
 
 
 
