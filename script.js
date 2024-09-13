@@ -18,7 +18,7 @@ const possibilitiesDisplay = document.getElementById('possibilitiesDisplay');
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 20, // Adjust based on your preference
+            "value": 100, // Adjust based on your preference
             "density": {
                 "enable": true,
                 "value_area": 800
@@ -28,7 +28,7 @@ particlesJS('particles-js', {
             "value": "#ff4500" // Fire-like color (orange-red)
         },
         "shape": {
-            "type": "triangle",
+            "type": "circle",
             "stroke": {
                 "width": 0,
                 "color": "#000000"
@@ -45,7 +45,7 @@ particlesJS('particles-js', {
             }
         },
         "size": {
-            "value": 1 // Adjust size for visibility
+            "value": 5, // Adjust size for visibility
             "random": true,
             "anim": {
                 "enable": false,
@@ -59,7 +59,7 @@ particlesJS('particles-js', {
         },
         "move": {
             "enable": true,
-            "speed": 3, // Adjust speed for smooth movement
+            "speed": 4, // Adjust speed for smooth movement
             "direction": "none",
             "random": true, // Random movement for a fire-like effect
             "straight": false,
@@ -88,10 +88,6 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
-
-
-
-
 
 // Toggle between simple and secure password options
 passwordType.addEventListener('change', () => {
