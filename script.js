@@ -45,7 +45,7 @@ particlesJS('particles-js', {
             }
         },
         "size": {
-            "value": 5, // Adjust size for visibility
+            "value": 1, // Adjust size for visibility
             "random": true,
             "anim": {
                 "enable": false,
